@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jing.maven.common.system.BaseController;
 import com.jing.weixin.apidemo.WeixinPayAPI;
 import com.jing.weixin.httputil.RequestHandler;
 import com.jing.weixin.httputil.ResponseHandler;
@@ -25,7 +24,7 @@ import WeiXinResult.WeiXinResult;
 
 @Controller
 @RequestMapping("config")
-public class TestWeixin extends BaseController{
+public class TestWeixin {
 	
 	 @RequestMapping(value="weixinJsApiPay")
 	 @ResponseBody
