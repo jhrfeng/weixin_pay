@@ -74,6 +74,7 @@ public class TestWeixin {
         //判断签名是否正确
         if(resHandler.isTenpaySign()) {
             //------------------------------
+        	SortedMap<String, String> packageParams = resHandler.getAllParameters();
             //处理业务开始
             //------------------------------
             String resXml = "";
@@ -96,7 +97,8 @@ public class TestWeixin {
             out.write(resXml.getBytes());
             out.flush();
             out.close();
-            System.out.println("------------------weixinPay_result---------------------");
+            System.out.println("------------------weixinPay_result---------------------\n");
+            System.out.println(packageParams);
         } else{
             System.out.println("通知签名验证失败");
         }
@@ -108,7 +110,7 @@ public class TestWeixin {
 	  * @param response
 	  * @return
 	  */
-    @RequestMapping(value="weixinOrdersQuery")
+    @RequestMapping(value="ordersQuery")
 	 @ResponseBody
 	 public WeiXinResult ordersQuery(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -125,7 +127,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinCloseOrder")
+    @RequestMapping(value="closeOrder")
 	 @ResponseBody
 	 public WeiXinResult closeOrder(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -141,7 +143,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinRefundOrder")
+    @RequestMapping(value="refundOrder")
 	 @ResponseBody
 	 public WeiXinResult refundOrder(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -158,7 +160,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinRefundOrder")
+    @RequestMapping(value="refundQuery")
 	 @ResponseBody
 	 public WeiXinResult refundQuery(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
