@@ -1,4 +1,4 @@
-package WeiXinResult;
+﻿package WeiXinResult;
 
 public class Notify_test {
 /**
@@ -30,7 +30,7 @@ System.out.println("----接收微信发来的消息---");
     	        System.out.println("----接收到的报文---"+inputString.toString());
     	        Map<Object, Object> map = XMLUtil.doXMLParse(inputString.toString());
     	    for(Object keyValue : map.keySet()){
-    	        System.out.println(keyValue+"="+map.get(keyValue));
+    	        System.out.println(keyValue+"="+map.get(keyValue)); 
     	    }
     	    if (map.get("result_code").toString().equalsIgnoreCase("SUCCESS")) {
     	        //TODO 对数据库的操作
