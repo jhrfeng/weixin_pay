@@ -99,5 +99,9 @@ public class XMLUtil {
 		in.close();
 		return (String)doc.getProperty("encoding");
 	}
+
+	public static String setXML(String string, String string2) {
+		return null;
+	}
 	
 }

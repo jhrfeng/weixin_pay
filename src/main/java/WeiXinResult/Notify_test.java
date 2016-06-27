@@ -1,7 +1,17 @@
 ﻿package WeiXinResult;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.jing.weixin.utils.XMLUtil;
+
 public class Notify_test {
-/**
  
   /**微信回调函数
  * 结果通知
@@ -43,8 +53,4 @@ System.out.println("----接收微信发来的消息---");
           
     }
 }
-  
- 
- * ***
- **/
 }

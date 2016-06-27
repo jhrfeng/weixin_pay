@@ -101,7 +101,13 @@ public class TestWeixin {
             System.out.println("通知签名验证失败");
         }
     }
-
+	 
+	/**
+	  * 查询订单
+	  * @param request
+	  * @param response
+	  * @return
+	  */
     @RequestMapping(value="weixinOrdersQuery")
 	 @ResponseBody
 	 public WeiXinResult ordersQuery(HttpServletRequest request, HttpServletResponse response){
@@ -109,6 +115,56 @@ public class TestWeixin {
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		
 		String result = WeixinPayAPI.ordersQuery(packageParams);
+			
+		return new WeiXinResult(result, "111");
+	 } 
+    
+    /**
+     * 关闭订单
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value="weixinCloseOrder")
+	 @ResponseBody
+	 public WeiXinResult closeOrder(HttpServletRequest request, HttpServletResponse response){
+		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
+		/**** 报文中必填字段 --> 自定义字段 *****/
+		
+		String result = WeixinPayAPI.closeOrder(packageParams);
+			
+		return new WeiXinResult(result, "111");
+	 } 
+    /**
+     * 申请退款
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value="weixinRefundOrder")
+	 @ResponseBody
+	 public WeiXinResult refundOrder(HttpServletRequest request, HttpServletResponse response){
+		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
+		/**** 报文中必填字段 --> 自定义字段 *****/
+		
+		String result = WeixinPayAPI.refundOrder(packageParams);
+			
+		return new WeiXinResult(result, "111");
+	 } 
+    
+    /**
+     * 查询退款
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value="weixinRefundOrder")
+	 @ResponseBody
+	 public WeiXinResult refundQuery(HttpServletRequest request, HttpServletResponse response){
+		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
+		/**** 报文中必填字段 --> 自定义字段 *****/
+		
+		String result = WeixinPayAPI.refundQuery(packageParams);
 			
 		return new WeiXinResult(result, "111");
 	 } 
