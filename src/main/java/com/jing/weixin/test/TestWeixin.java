@@ -1,6 +1,7 @@
 package com.jing.weixin.test;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -74,7 +75,7 @@ public class TestWeixin {
         //判断签名是否正确
         if(resHandler.isTenpaySign()) {
             //------------------------------
-            //处理业务开始
+        	SortedMap<String, String> packageParams = resHandler.getAllParameters();
             //------------------------------
             String resXml = "";
             if("SUCCESS".equals(resHandler.getParameter("result_code"))){
@@ -97,6 +98,7 @@ public class TestWeixin {
             out.flush();
             out.close();
             System.out.println("------------------weixinPay_result---------------------");
+            System.out.println(packageParams);
         } else{
             System.out.println("通知签名验证失败");
         }
@@ -112,4 +114,9 @@ public class TestWeixin {
 			
 		return new WeiXinResult(result, "111");
 	 } 
+    
+    @RequestMapping(value="zhifuSuccess")
+    public String zhifuSuccess(){
+    	return "test/test";
+    }
 }
