@@ -55,4 +55,34 @@ public class WeixinPayAPI {
 		return prePayId;
 	}
 
+	/**
+	 * 查询订单
+	 * @param packageParams
+	 * @return
+	 */
+	public static String ordersQuery(SortedMap<String, String> packageParams){
+		/**** 报文中必填字段  *****/
+		String nonceStr = UUID.randomUUID().toString().toUpperCase();
+		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
+		packageParams.put("mch_id", WeixinConfig.MCH_ID); //商户号
+		packageParams.put("nonce_str", nonceStr.replace("-", "")); //随机字符串
+//		packageParams.put("out_trade_no", "201606271009352720"); //商品订单号
+		packageParams.put("transaction_id", "4000092001201606277956532063"); //微信订单号
+		/**** 报文中非必填字段  *****/
+		
+		//订单状态
+		String trade_state = HTTPClientUtils.sendOrdersQueryRequest(packageParams, WeixinConfig.KEY);
+		return trade_state;
+	}
+	
+	
+	/**
+	 * 关闭订单
+	 * @param packageParams
+	 * @return
+	 */
+	public static String closeOrder(SortedMap<String, String> packageParams){
+		return "";
+	}
+
 }

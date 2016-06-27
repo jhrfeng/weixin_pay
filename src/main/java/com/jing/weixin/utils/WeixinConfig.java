@@ -14,4 +14,10 @@ public class WeixinConfig {
 	  
 	  //统一下单API URL
 	  public static final String sendNativeOrderRequestURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+	   //查询订单API URL
+	  public static final String sendOrdersQueryRequestURL = "https://api.mch.weixin.qq.com/pay/orderquery";
+	  
+	  //关闭订单API URL
+	  public static final String sendCloseOrderRequestURL = "https://api.mch.weixin.qq.com/pay/closeorder";
 }

@@ -101,4 +101,15 @@ public class TestWeixin {
             System.out.println("通知签名验证失败");
         }
     }
+
+    @RequestMapping(value="weixinOrdersQuery")
+	 @ResponseBody
+	 public WeiXinResult ordersQuery(HttpServletRequest request, HttpServletResponse response){
+		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
+		/**** 报文中必填字段 --> 自定义字段 *****/
+		
+		String result = WeixinPayAPI.ordersQuery(packageParams);
+			
+		return new WeiXinResult(result, "111");
+	 } 
 }

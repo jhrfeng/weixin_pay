@@ -99,4 +99,39 @@ public class HTTPClientUtils {
 		
 		return urlCode;
 	}
+
+	public static String sendOrdersQueryRequest(
+			SortedMap<String, String> packageParams,
+			String key
+				){
+		//请求查询的URL
+		String  requestUrl = WeixinConfig.sendOrdersQueryRequestURL;
+		// 做一次签名
+		String sign = RequestHandler.createSign(packageParams, key);
+		packageParams.put("sign", sign);
+		// 转为微信规范的报文形式 XML
+		String xmlParam = RequestHandler.parseXML(packageParams);
+		
+		//请求处理
+		DefaultHttpClient client = new DefaultHttpClient();
+		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
+		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
+		String trade_state = "";
+		try{
+			// 处理返回结果
+			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
+			HttpResponse weixinResponse = httpclient.execute(httpost);
+			String jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
+			System.out.println(jsonStr);
+			
+			 Map map = RequestHandler.doXMLParse(jsonStr);
+	         String return_code = (String) map.get("return_code");
+	         trade_state = (String) map.get("trade_state");
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return trade_state;
+	}
 }
