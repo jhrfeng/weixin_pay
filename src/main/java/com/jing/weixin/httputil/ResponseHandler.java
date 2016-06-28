@@ -220,7 +220,7 @@ public class ResponseHandler {
 		return this.request;
 	}
 	
-	protected HttpServletResponse getHttpServletResponse() {
+	public HttpServletResponse getHttpServletResponse() {
 		return this.response;
 	}
 }

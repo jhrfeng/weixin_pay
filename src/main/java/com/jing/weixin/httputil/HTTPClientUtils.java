@@ -13,6 +13,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.utils.WeixinConfig;
 
 public class HTTPClientUtils {
@@ -61,10 +62,11 @@ public class HTTPClientUtils {
 		return prepay_id;
 	}
 
-	public static String sendNativeOrderRequest(
+	public static WeiXinResult sendNativeOrderRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		String  requestUrl = WeixinConfig.sendNativeOrderRequestURL;
 		// 做一次签名
 		String sign = RequestHandler.createSign(packageParams, key);
@@ -86,18 +88,17 @@ public class HTTPClientUtils {
 			System.out.println(jsonStr);
 			
 			if(jsonStr.indexOf("FAIL") != -1) {
-				return urlCode;
+				return weiXinResult;
 			}
 			 Map map = RequestHandler.doXMLParse(jsonStr);
-	         String return_code = (String) map.get("return_code");
-	         prepay_id = (String) map.get("prepay_id");
-	         urlCode = (String) map.get("code_url"); // 二维码图片URL
-			
+			 weiXinResult.setResultCode((String) map.get("return_code"));
+			 weiXinResult.setPrayId((String) map.get("prepay_id"));
+			 weiXinResult.setUrlCode((String) map.get("code_url")); // 二维码图片URL
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return urlCode;
+		return weiXinResult;
 	}
 
 	public static String sendOrdersQueryRequest(

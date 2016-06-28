@@ -59,10 +59,10 @@
 	</bean>
 	
 	<!-- jasper -->
-<!-- 	<bean id="jasperReportResolver"
+ 	<bean id="jasperReportResolver"
 		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
 		 <property name="basename" value="views" />     
-	</bean> -->
+	</bean> 
 
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:index" />

@@ -1,34 +1,42 @@
 package com.jing.weixin.test;
 
 import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jing.weixin.apidemo.WeixinPayAPI;
+import com.jing.weixin.entity.FinaceOrder;
+import com.jing.weixin.entity.WeiXinReq;
+import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.httputil.RequestHandler;
 import com.jing.weixin.httputil.ResponseHandler;
+import com.jing.weixin.service.WeixinService;
 import com.jing.weixin.utils.WeixinConfig;
 
-import WeiXinResult.WeiXinReq;
-import WeiXinResult.WeiXinResult;
+
 
 
 @Controller
 @RequestMapping("config")
 public class TestWeixin {
 	
+	@Autowired
+	private WeixinService weiXinService;
+	
 	 @RequestMapping(value="weixinJsApiPay")
 	 @ResponseBody
 	 public WeiXinResult jsApiOrder(HttpServletRequest request, HttpServletResponse response){
+		FinaceOrder finaceOrder = new FinaceOrder();
 		SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		packageParams.put("openid","oD9f8s9hzd8-hugv0lkFMiS22YBc"); //商品ID，NATIVE必填
@@ -37,7 +45,6 @@ public class TestWeixin {
 		packageParams.put("total_fee", "1"); //总金额
 		packageParams.put("spbill_create_ip", "192.168.2.1"); // 终端IP
 		String result = WeixinPayAPI.jsApiOrder(packageParams);
-			
 		return new WeiXinResult(result, "111");
 	 }
 	 
@@ -45,18 +52,24 @@ public class TestWeixin {
 	 @ResponseBody
 	 public WeiXinResult nativeOrder(WeiXinReq params,
 			 HttpServletRequest request, HttpServletResponse response){
+		FinaceOrder finaceOrder = new FinaceOrder(params);
 		SortedMap<String, String> packageParams =  new TreeMap<String, String>();
+		String outTradeNo = RequestHandler.getRandomDateNo();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		packageParams.put("total_fee", "1"); //总金额	
-		packageParams.put("body", "太平押金"); //商品描述
+		packageParams.put("body", params.getRemark()); //商品描述
 	//	packageParams.put("total_fee", (params.getTotalNum()*100)+""); //总金额
 		packageParams.put("total_fee", params.getTotalNum()+""); //总金额
-		packageParams.put("spbill_create_ip", "192.168.1.1"); // 终端IP
+		packageParams.put("spbill_create_ip", request.getRemoteHost()); // 终端IP
 		packageParams.put("product_id","TPYX001"); //商品ID，NATIVE必填
+		packageParams.put("out_trade_no",outTradeNo); //商品订单号
 		
-		String result = WeixinPayAPI.nativeOrder(packageParams);
+		WeiXinResult result = WeixinPayAPI.nativeOrder(packageParams);
 		
-		return new WeiXinResult(result, "111");
+		finaceOrder.setTradeNo(outTradeNo);	
+		weiXinService.saveWeixinOrderInfo(finaceOrder);
+		
+		return result;
 	 }
 	
 	 @RequestMapping(value = "weixinPay_result")
@@ -74,6 +87,7 @@ public class TestWeixin {
         //判断签名是否正确
         if(resHandler.isTenpaySign()) {
             //------------------------------
+        	SortedMap<String, String> packageParams = resHandler.getAllParameters();
             //处理业务开始
             //------------------------------
             String resXml = "";
@@ -96,7 +110,10 @@ public class TestWeixin {
             out.write(resXml.getBytes());
             out.flush();
             out.close();
-            System.out.println("------------------weixinPay_result---------------------");
+            System.out.println("------------------weixinPay_result---------------------\n");
+            System.out.println(packageParams);
+ //           resHandler.getHttpServletResponse().sendRedirect("test.html");
+//            response.sendRedirect("test.html");
         } else{
             System.out.println("通知签名验证失败");
         }
@@ -108,7 +125,7 @@ public class TestWeixin {
 	  * @param response
 	  * @return
 	  */
-    @RequestMapping(value="weixinOrdersQuery")
+    @RequestMapping(value="ordersQuery")
 	 @ResponseBody
 	 public WeiXinResult ordersQuery(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -125,7 +142,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinCloseOrder")
+    @RequestMapping(value="closeOrder")
 	 @ResponseBody
 	 public WeiXinResult closeOrder(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -141,7 +158,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinRefundOrder")
+    @RequestMapping(value="refundOrder")
 	 @ResponseBody
 	 public WeiXinResult refundOrder(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -158,7 +175,7 @@ public class TestWeixin {
      * @param response
      * @return
      */
-    @RequestMapping(value="weixinRefundOrder")
+     @RequestMapping(value="refundQuery")
 	 @ResponseBody
 	 public WeiXinResult refundQuery(HttpServletRequest request, HttpServletResponse response){
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
@@ -168,4 +185,17 @@ public class TestWeixin {
 			
 		return new WeiXinResult(result, "111");
 	 } 
+    
+    @RequestMapping(value="index")
+    public String index(){
+    	System.out.println("-------------index---------");
+    	return "test/test";
+    }
+    
+    @RequestMapping(value="index4")
+    public void index4(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+    	System.out.println("-------------index---------");
+    	resp.sendRedirect("test.html");
+    }
+
 }

@@ -21,7 +21,7 @@
    function callpay(){
  	var url = "http://ljh5522.xicp.net/wxpay/config/weixinNativePay";
  	$.post(url,{"totalNum":$("#payfee").val()}, function(data){
- 		$('#qrcode-icon').qrcode(data.resultCode); //任意字符串 
+ 		$('#qrcode-icon').qrcode(data.urlCode); //任意字符串 
  		var can = document.getElementsByTagName("canvas");
  		var src = can[0].toDataURL("image/png");
  		$(can).replaceWith("<img src='"+src+"' />");
