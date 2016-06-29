@@ -33,3 +33,5 @@
 /target/classes/conf/spring-mvc.xml
 /target/classes/conf/testservice.properties
 /target/classes/log4j.properties
+
+/src/main/java/com/jing/weixin/utils/WeixinConfig.java
