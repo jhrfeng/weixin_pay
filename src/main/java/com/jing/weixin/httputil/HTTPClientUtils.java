@@ -25,10 +25,11 @@ public class HTTPClientUtils {
         httpclient = (DefaultHttpClient) HttpClientConnectionManager.getSSLInstance(httpclient);
     }
     
-    public static String sendJsApiOrderRequest(
+    public static WeiXinResult sendJsApiOrderRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+    	WeiXinResult weiXinResult = new WeiXinResult();
 		String  requestUrl = WeixinConfig.sendNativeOrderRequestURL;
 		// 做一次签名
 		String sign = RequestHandler.createSign(packageParams, key);
@@ -40,7 +41,6 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String prepay_id = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -49,17 +49,17 @@ public class HTTPClientUtils {
 			System.out.println(jsonStr);
 			
 			if(jsonStr.indexOf("FAIL") != -1) {
-				return prepay_id;
+				return weiXinResult;
 			}
 			 Map map = RequestHandler.doXMLParse(jsonStr);
-	         String return_code = (String) map.get("return_code");
-	         prepay_id = (String) map.get("prepay_id");
+	         weiXinResult.setResultCode((String) map.get("return_code"));
+	         weiXinResult.setPrayId((String) map.get("prepay_id"));
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return prepay_id;
+		return weiXinResult;
 	}
 
 	public static WeiXinResult sendNativeOrderRequest(
@@ -78,8 +78,6 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String prepay_id = "";
-		String urlCode = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -101,10 +99,11 @@ public class HTTPClientUtils {
 		return weiXinResult;
 	}
 
-	public static String sendOrdersQueryRequest(
+	public static WeiXinResult sendOrdersQueryRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求查询的URL
 		String  requestUrl = WeixinConfig.sendOrdersQueryRequestURL;
 		// 做一次签名
@@ -117,7 +116,7 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String trade_state = "";
+//		String trade_state = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -126,20 +125,23 @@ public class HTTPClientUtils {
 			System.out.println(jsonStr);
 			
 			 Map map = RequestHandler.doXMLParse(jsonStr);
+			 weiXinResult.setResultCode((String) map.get("result_code"));
+			 weiXinResult.setMessage((String)map.get("return_msg"));
 //	         String return_code = (String) map.get("return_code");
-	         trade_state = (String) map.get("trade_state");
+//	         trade_state = (String) map.get("trade_state");
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return trade_state;
+		return weiXinResult;
 	}
 	
-	public static String sendCloseOrderRequest(
+	public static WeiXinResult sendCloseOrderRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求关闭订单的URL
 		String  requestUrl = WeixinConfig.sendCloseOrderRequestURL;
 		// 做一次签名
@@ -152,7 +154,6 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String return_msg = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -161,20 +162,20 @@ public class HTTPClientUtils {
 			System.out.println(jsonStr);
 			
 			 Map map = RequestHandler.doXMLParse(jsonStr);
-//	         String return_code = (String) map.get("return_code");
-	         return_msg = (String) map.get("return_msg");
+	         weiXinResult.setMessage((String) map.get("return_msg"));
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return return_msg;
+		return weiXinResult;
 	}
 	
-	public static String sendRefundOrderRequest(
+	public static WeiXinResult sendRefundOrderRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求申请退款的URL
 		String  requestUrl = WeixinConfig.sendRefundOrderRequestURL;
 		// 做一次签名
@@ -198,18 +199,20 @@ public class HTTPClientUtils {
 			 Map map = RequestHandler.doXMLParse(jsonStr);
 //	         String return_code = (String) map.get("return_code");
 	         return_msg = (String) map.get("return_msg");
+	         weiXinResult.setMessage((String) map.get("return_msg"));
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return return_msg;
+		return weiXinResult;
 	}
 	
-	public static String sendRefundQueryRequest(
+	public static WeiXinResult sendRefundQueryRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求查询退款的URL
 		String  requestUrl = WeixinConfig.sendRefundQueryRequestURL;
 		// 做一次签名
@@ -222,7 +225,6 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String return_msg = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
@@ -231,20 +233,19 @@ public class HTTPClientUtils {
 			System.out.println(jsonStr);
 			
 			 Map map = RequestHandler.doXMLParse(jsonStr);
-//	         String return_code = (String) map.get("return_code");
-	         return_msg = (String) map.get("return_msg");
-			
+	         weiXinResult.setMessage((String) map.get("return_msg"));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return return_msg;
+		return weiXinResult;
 	}
 	
-	public static String sendDownloadBillRequest(
+	public static WeiXinResult sendDownloadBillRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
+		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求下载对账单的URL
 		String  requestUrl = WeixinConfig.sendDownloadBillRequestURL;
 		// 做一次签名
@@ -268,6 +269,6 @@ public class HTTPClientUtils {
 			e.printStackTrace();
 		}
 		
-		return jsonStr;
+		return weiXinResult;
 	}
 }

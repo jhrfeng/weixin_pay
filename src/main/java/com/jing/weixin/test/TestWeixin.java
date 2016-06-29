@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,8 +43,8 @@ public class TestWeixin {
 		packageParams.put("body", "太平押金"); //商品描述
 		packageParams.put("total_fee", "1"); //总金额
 		packageParams.put("spbill_create_ip", "192.168.2.1"); // 终端IP
-		String result = WeixinPayAPI.jsApiOrder(packageParams);
-		return new WeiXinResult(result, "111");
+		WeiXinResult result = WeixinPayAPI.jsApiOrder(packageParams);
+		return result;
 	 }
 	 
 	 @RequestMapping(value="weixinNativePay")
@@ -131,9 +130,9 @@ public class TestWeixin {
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		
-		String result = WeixinPayAPI.ordersQuery(packageParams);
+		 WeiXinResult result = WeixinPayAPI.ordersQuery(packageParams);
 			
-		return new WeiXinResult(result, "111");
+		return result;
 	 } 
     
     /**
@@ -148,9 +147,9 @@ public class TestWeixin {
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		
-		String result = WeixinPayAPI.closeOrder(packageParams);
+		 WeiXinResult result = WeixinPayAPI.closeOrder(packageParams);
 			
-		return new WeiXinResult(result, "111");
+		return result;
 	 } 
     /**
      * 申请退款
@@ -164,9 +163,9 @@ public class TestWeixin {
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		
-		String result = WeixinPayAPI.refundOrder(packageParams);
+		 WeiXinResult result = WeixinPayAPI.refundOrder(packageParams);
 			
-		return new WeiXinResult(result, "111");
+		return result;
 	 } 
     
     /**
@@ -181,9 +180,9 @@ public class TestWeixin {
 		 SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		/**** 报文中必填字段 --> 自定义字段 *****/
 		
-		String result = WeixinPayAPI.refundQuery(packageParams);
+		 WeiXinResult result = WeixinPayAPI.refundQuery(packageParams);
 			
-		return new WeiXinResult(result, "111");
+		return result;
 	 } 
     
     @RequestMapping(value="index")
