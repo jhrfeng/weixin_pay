@@ -40,10 +40,14 @@
 		<p><input type="text" name="username"></p>
 		<p>金额（必填，单位：元）</p>
 		<p><input type="text" id="payfee" name="payfee"></p>
-		<p>身份证</p><p><input type="text" name="idcard"></p>
+		<p>身份证</p>
+		<p><input type="text" name="idcard"></p>
+		<p>手机号</p>
+		<p><input type="text" name="mobile"></p>
 		<p> 备注：押金电子收费 </p>
 		<p>
-			<input type="button" value="点击支付" id="pay" onclick="callpay();" />
+			<input type="button" value="确认支付" id="pay" onclick="callpay();" />
+			<input type="button" value="完成支付" id="payoff" onclick="callpayoff();" />
 		</p>
 	 
 <div id="qrcode-icon" style="width: 50px;height: 70px;text-align: center;padding: 30px 0px 0px 40px;"> 

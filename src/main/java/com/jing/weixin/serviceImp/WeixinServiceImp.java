@@ -3,10 +3,13 @@ package com.jing.weixin.serviceImp;
 import java.util.Date;
 import java.util.SortedMap;
 
+import org.springframework.stereotype.Service;
+
 import com.jing.weixin.apidemo.WeixinPayAPI;
 import com.jing.weixin.entity.FinaceOrder;
 import com.jing.weixin.service.WeixinService;
 
+@Service("WeixinService")
 public class WeixinServiceImp implements WeixinService{
 
 	public void saveWeixinOrderInfo(FinaceOrder finaceOrder){
