@@ -83,6 +83,7 @@ public class TestWeixin {
         //创建支付应答对象
         ResponseHandler resHandler = new ResponseHandler(request, response);
         resHandler.setKey(key);
+        System.out.println("-----11----");
         //判断签名是否正确
         if(resHandler.isTenpaySign()) {
             //------------------------------

@@ -40,6 +40,10 @@ public class FinaceOrder extends WeiXinReq{
 	 * 微信支付结果状态，0未支付成功，1已支付成功
 	 */
 	private String weixinStatus;
+	/**
+	 * 支付结果通知
+	 */
+	private WeiXinPayResult payResult;
 	
 	public FinaceOrder(){}
 	
@@ -55,6 +59,14 @@ public class FinaceOrder extends WeiXinReq{
 		this.clothingId = weiXinReq.getClothingId();
 		this.clothingName = weiXinReq.getClothingName();
 		this.urlId = weiXinReq.getUrlId();
+	}
+	
+	public WeiXinPayResult getPayResult() {
+		return payResult;
+	}
+
+	public void setPayResult(WeiXinPayResult payResult) {
+		this.payResult = payResult;
 	}
 
 	public String getTradeNo() {

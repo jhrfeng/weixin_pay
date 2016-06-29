@@ -20,7 +20,7 @@
    //调用微信支付程式
    function callpay(){
  	var url = "http://127.0.0.1:8080/wxpay/config/weixinNativePay";
- 	$.post(url,{"totalNum":$("#payfee").val()}, function(data){
+ 	$.post(url,{"totalNum":$("#payfee").val(), "remark":"押金电子收费"}, function(data){
  		$('#qrcode-icon').qrcode(data.resultCode); //任意字符串 
  		var can = document.getElementsByTagName("canvas");
  		var src = can[0].toDataURL("image/png");

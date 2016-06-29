@@ -63,31 +63,31 @@ public class WeiXinBill {
 	/**
 	 * 代金券或立减优惠金额
 	 */
-	private String coupon_fee;
+	private String couponFee;
 	/**
 	 * 微信退款单号
 	 */
-	private String refund_id;
+	private String refundId;
 	/**
 	 * 商户退款单号
 	 */
-	private String out_refund_no;
+	private String out_refundNo;
 	/**
 	 * 退款金额
 	 */
-	private String settlement_refund_fee_$n;
+	private String settlementRefundFee$n;
 	/**
 	 * 代金券或立减优惠退款金额
 	 */
-	private String coupon_refund_fee_$n;
+	private String couponRefundFee$n;
 	/**
 	 * 退款类型
 	 */
-	private String refund_type;
+	private String refundType;
 	/**
 	 * 退款状态
 	 */
-	private String refund_status_$n;
+	private String refundStatus$n;
 	/**
 	 * 商品名称
 	 */
@@ -184,47 +184,47 @@ public class WeiXinBill {
 	public void setTotalFee(String totalFee) {
 		this.totalFee = totalFee;
 	}
-	public String getCoupon_fee() {
-		return coupon_fee;
+	public String getCouponFee() {
+		return couponFee;
 	}
-	public void setCoupon_fee(String coupon_fee) {
-		this.coupon_fee = coupon_fee;
+	public void setCouponFee(String couponFee) {
+		this.couponFee = couponFee;
 	}
-	public String getRefund_id() {
-		return refund_id;
+	public String getRefundId() {
+		return refundId;
 	}
-	public void setRefund_id(String refund_id) {
-		this.refund_id = refund_id;
+	public void setRefundId(String refundId) {
+		this.refundId = refundId;
 	}
-	public String getOut_refund_no() {
-		return out_refund_no;
+	public String getOut_refundNo() {
+		return out_refundNo;
 	}
-	public void setOut_refund_no(String out_refund_no) {
-		this.out_refund_no = out_refund_no;
+	public void setOut_refundNo(String out_refundNo) {
+		this.out_refundNo = out_refundNo;
 	}
-	public String getSettlement_refund_fee_$n() {
-		return settlement_refund_fee_$n;
+	public String getSettlementRefundFee$n() {
+		return settlementRefundFee$n;
 	}
-	public void setSettlement_refund_fee_$n(String settlement_refund_fee_$n) {
-		this.settlement_refund_fee_$n = settlement_refund_fee_$n;
+	public void setSettlementRefundFee$n(String settlementRefundFee$n) {
+		this.settlementRefundFee$n = settlementRefundFee$n;
 	}
-	public String getCoupon_refund_fee_$n() {
-		return coupon_refund_fee_$n;
+	public String getCouponRefundFee$n() {
+		return couponRefundFee$n;
 	}
-	public void setCoupon_refund_fee_$n(String coupon_refund_fee_$n) {
-		this.coupon_refund_fee_$n = coupon_refund_fee_$n;
+	public void setCouponRefundFee$n(String couponRefundFee$n) {
+		this.couponRefundFee$n = couponRefundFee$n;
 	}
-	public String getRefund_type() {
-		return refund_type;
+	public String getRefundType() {
+		return refundType;
 	}
-	public void setRefund_type(String refund_type) {
-		this.refund_type = refund_type;
+	public void setRefundType(String refundType) {
+		this.refundType = refundType;
 	}
-	public String getRefund_status_$n() {
-		return refund_status_$n;
+	public String getRefundStatus$n() {
+		return refundStatus$n;
 	}
-	public void setRefund_status_$n(String refund_status_$n) {
-		this.refund_status_$n = refund_status_$n;
+	public void setRefundStatus$n(String refundStatus$n) {
+		this.refundStatus$n = refundStatus$n;
 	}
 	public String getCommodityname() {
 		return commodityname;
