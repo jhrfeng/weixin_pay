@@ -156,10 +156,10 @@ public class WeixinPayAPI {
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
 		packageParams.put("mch_id", WeixinConfig.MCH_ID); //商户号
 		packageParams.put("nonce_str", nonceStr.replace("-", "")); //随机字符串
-		packageParams.put("bill_date", "");//对账单日期
+		packageParams.put("bill_date", "20160627");//对账单日期
 		/**** 报文中非必填字段  *****/
 		packageParams.put("device_info", "013467007045764");//设备号
-		packageParams.put("bill_type", "");//账单类型
+		packageParams.put("bill_type", "ALL");//账单类型
 		
 		String return_msg = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
 		return return_msg;
