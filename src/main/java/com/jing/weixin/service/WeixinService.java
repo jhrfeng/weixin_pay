@@ -2,6 +2,8 @@ package com.jing.weixin.service;
 
 import java.util.SortedMap;
 
+import org.springframework.stereotype.Service;
+
 import com.jing.weixin.entity.FinaceOrder;
 
 public interface WeixinService {
