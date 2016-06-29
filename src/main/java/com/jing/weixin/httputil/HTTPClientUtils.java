@@ -257,22 +257,17 @@ public class HTTPClientUtils {
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
-		String return_msg = "";
+		String jsonStr = "";
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
 			HttpResponse weixinResponse = httpclient.execute(httpost);
-			String jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
+			jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
 			System.out.println(jsonStr);
-			
-			 Map map = RequestHandler.doXMLParse(jsonStr);
-//	         String return_code = (String) map.get("return_code");
-	         return_msg = (String) map.get("return_msg");
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return return_msg;
+		return jsonStr;
 	}
 }
