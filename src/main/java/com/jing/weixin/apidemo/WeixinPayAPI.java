@@ -38,7 +38,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String jsApiOrder(SortedMap<String, String> packageParams){
+	public static WeiXinResult jsApiOrder(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -50,9 +50,9 @@ public class WeixinPayAPI {
 		/**** 报文中非必填字段  *****/
 		
 		
-		String prePayId = 
+		WeiXinResult eiXinResult = 
 				HTTPClientUtils.sendJsApiOrderRequest(packageParams, WeixinConfig.KEY);
-		return prePayId;
+		return eiXinResult;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String ordersQuery(SortedMap<String, String> packageParams){
+	public static WeiXinResult ordersQuery(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -71,9 +71,8 @@ public class WeixinPayAPI {
 		packageParams.put("transaction_id", "4000092001201606277956532063"); //微信订单号(方式二)
 		/**** 报文中非必填字段  *****/
 		
-		//订单状态
-		String trade_state = HTTPClientUtils.sendOrdersQueryRequest(packageParams, WeixinConfig.KEY);
-		return trade_state;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendOrdersQueryRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 	
 	
@@ -82,7 +81,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String closeOrder(SortedMap<String, String> packageParams){
+	public static WeiXinResult closeOrder(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -91,9 +90,8 @@ public class WeixinPayAPI {
 		packageParams.put("out_trade_no", "201606271009352720"); //商品订单号
 		/**** 报文中非必填字段  *****/
 		
-		//订单状态
-		String return_msg = HTTPClientUtils.sendCloseOrderRequest(packageParams, WeixinConfig.KEY);
-		return return_msg;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendCloseOrderRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 	
 	/**
@@ -101,7 +99,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String refundOrder(SortedMap<String, String> packageParams){
+	public static WeiXinResult refundOrder(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -118,8 +116,8 @@ public class WeixinPayAPI {
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("refund_fee_type", "");//货币种类
 		
-		String return_msg = HTTPClientUtils.sendRefundOrderRequest(packageParams, WeixinConfig.KEY);
-		return return_msg;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendRefundOrderRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 	
 	/**
@@ -127,7 +125,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String refundQuery(SortedMap<String, String> packageParams){
+	public static WeiXinResult refundQuery(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -141,8 +139,8 @@ public class WeixinPayAPI {
 		/**** 报文中非必填字段  *****/
 		packageParams.put("device_info", "013467007045764");//设备号
 		
-		String return_msg = HTTPClientUtils.sendRefundQueryRequest(packageParams, WeixinConfig.KEY);
-		return return_msg;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendRefundQueryRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 	
 	/**
@@ -150,19 +148,19 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String downloadBill(SortedMap<String, String> packageParams){
+	public static WeiXinResult downloadBill(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
 		packageParams.put("mch_id", WeixinConfig.MCH_ID); //商户号
 		packageParams.put("nonce_str", nonceStr.replace("-", "")); //随机字符串
-		packageParams.put("bill_date", "20160627");//对账单日期
+		packageParams.put("bill_date", "20160628");//对账单日期
 		/**** 报文中非必填字段  *****/
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "ALL");//账单类型
 		
-		String return_msg = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
-		return return_msg;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 	
 	/**
@@ -170,7 +168,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String payReport(SortedMap<String, String> packageParams){
+	public static WeiXinResult payReport(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -181,8 +179,8 @@ public class WeixinPayAPI {
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "");//账单类型
 		
-		String return_msg = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
-		return return_msg;
+		WeiXinResult eiXinResult = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+		return eiXinResult;
 	}
 
 }
