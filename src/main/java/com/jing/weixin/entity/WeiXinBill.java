@@ -8,10 +8,11 @@ package com.jing.weixin.entity;
  *
  */
 public class WeiXinBill {
+	private String tid;
 	/**
 	 * 交易时间
 	 */
-	private String time; 
+	private String tradeTime; 
 	/**
 	 * 公众账号ID
 	 */
@@ -75,11 +76,11 @@ public class WeiXinBill {
 	/**
 	 * 退款金额
 	 */
-	private String settlementRefundFee$n;
+	private String settlementRefundFee;
 	/**
 	 * 代金券或立减优惠退款金额
 	 */
-	private String couponRefundFee$n;
+	private String couponRefundFee;
 	/**
 	 * 退款类型
 	 */
@@ -87,7 +88,7 @@ public class WeiXinBill {
 	/**
 	 * 退款状态
 	 */
-	private String refundStatus$n;
+	private String refundStatus;
 	/**
 	 * 商品名称
 	 */
@@ -104,13 +105,34 @@ public class WeiXinBill {
 	 * 费率
 	 */
 	private String rate;
+	/**
+	 * 首次同步时间
+	 */
+	private String createDate;
+	/**
+	 * 最新同步时间
+	 */
+	private String modifyDate;
+	/**
+	 * 0删除，1有效
+	 */
+	private String status;
+	/**
+	 * 0未同步，1已同步
+	 */
+	private String sync;
 	
-	
-	public String getTime() {
-		return time;
+	public String getTid() {
+		return tid;
 	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setTid(String tid) {
+		this.tid = tid;
+	}
+	public String getTradeTime() {
+		return tradeTime;
+	}
+	public void setTradeTime(String tradeTime) {
+		this.tradeTime = tradeTime;
 	}
 	public String getAppid() {
 		return appid;
@@ -202,17 +224,17 @@ public class WeiXinBill {
 	public void setOut_refundNo(String out_refundNo) {
 		this.out_refundNo = out_refundNo;
 	}
-	public String getSettlementRefundFee$n() {
-		return settlementRefundFee$n;
+	public String getSettlementRefundFee() {
+		return settlementRefundFee;
 	}
-	public void setSettlementRefundFee$n(String settlementRefundFee$n) {
-		this.settlementRefundFee$n = settlementRefundFee$n;
+	public void setSettlementRefundFee(String settlementRefundFee) {
+		this.settlementRefundFee = settlementRefundFee;
 	}
-	public String getCouponRefundFee$n() {
-		return couponRefundFee$n;
+	public String getCouponRefundFee() {
+		return couponRefundFee;
 	}
-	public void setCouponRefundFee$n(String couponRefundFee$n) {
-		this.couponRefundFee$n = couponRefundFee$n;
+	public void setCouponRefundFee(String couponRefundFee) {
+		this.couponRefundFee = couponRefundFee;
 	}
 	public String getRefundType() {
 		return refundType;
@@ -220,11 +242,11 @@ public class WeiXinBill {
 	public void setRefundType(String refundType) {
 		this.refundType = refundType;
 	}
-	public String getRefundStatus$n() {
-		return refundStatus$n;
+	public String getRefundStatus() {
+		return refundStatus;
 	}
-	public void setRefundStatus$n(String refundStatus$n) {
-		this.refundStatus$n = refundStatus$n;
+	public void setRefundStatus(String refundStatus) {
+		this.refundStatus = refundStatus;
 	}
 	public String getCommodityname() {
 		return commodityname;
@@ -250,6 +272,29 @@ public class WeiXinBill {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	public String getModifyDate() {
+		return modifyDate;
+	}
+	public void setModifyDate(String modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getSync() {
+		return sync;
+	}
+	public void setSync(String sync) {
+		this.sync = sync;
+	}
 	
-
 }

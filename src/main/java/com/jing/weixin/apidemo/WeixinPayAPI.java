@@ -148,7 +148,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static WeiXinResult downloadBill(SortedMap<String, String> packageParams){
+	public static String downloadBill(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -159,8 +159,8 @@ public class WeixinPayAPI {
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "ALL");//账单类型
 		
-		WeiXinResult eiXinResult = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
-		return eiXinResult;
+		String result = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+		return result;
 	}
 	
 	/**
@@ -178,8 +178,8 @@ public class WeixinPayAPI {
 		/**** 报文中非必填字段  *****/
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "");//账单类型
-		
-		WeiXinResult eiXinResult = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+		WeiXinResult eiXinResult = new WeiXinResult();
+		String result = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
 		return eiXinResult;
 	}
 
