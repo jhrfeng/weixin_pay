@@ -2,6 +2,7 @@ package com.jing.weixin.test;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jing.weixin.apidemo.WeixinPayAPI;
 import com.jing.weixin.entity.FinaceOrder;
+import com.jing.weixin.entity.WeiXinPayResult;
 import com.jing.weixin.entity.WeiXinReq;
 import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.httputil.RequestHandler;
@@ -66,7 +68,20 @@ public class TestWeixin {
 		WeiXinResult result = WeixinPayAPI.nativeOrder(packageParams);
 		
 		finaceOrder.setTradeNo(outTradeNo);	
-		weiXinService.saveWeixinOrderInfo(finaceOrder);
+		finaceOrder.setCodeUrl(result.getUrlCode());
+		finaceOrder.setPrepayId(result.getPrayId());
+		finaceOrder.setResultCode(result.getResultCode());
+		finaceOrder.setReturnCode(result.getReturnCode());
+		finaceOrder.setAppid(result.getAppid());
+		finaceOrder.setMchId(result.getMchId());
+		finaceOrder.setNonceStr(result.getNonceStr());
+		finaceOrder.setTradeType(result.getTradeType());
+		try {
+			weiXinService.saveWeixinOrderInfo(finaceOrder);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return result;
 	 }
@@ -111,7 +126,10 @@ public class TestWeixin {
             out.flush();
             out.close();
             System.out.println("------------------weixinPay_result---------------------\n");
+            System.out.println(packageParams.get("mch_id"));
             System.out.println(packageParams);
+//            WeiXinPayResult result = new WeiXinPayResult();
+            weiXinService.updateWeixinOrderResult(packageParams);
  //           resHandler.getHttpServletResponse().sendRedirect("test.html");
 //            response.sendRedirect("test.html");
         } else{

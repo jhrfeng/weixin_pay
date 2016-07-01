@@ -1,10 +1,12 @@
 package com.jing.weixin.service;
 
+import java.sql.SQLException;
 import java.util.SortedMap;
 
 import org.springframework.stereotype.Service;
 
 import com.jing.weixin.entity.FinaceOrder;
+import com.jing.weixin.entity.WeiXinPayResult;
 
 public interface WeixinService {
 	
@@ -12,14 +14,14 @@ public interface WeixinService {
 	 * 微信下单预存储
 	 * @param finaceOrder
 	 */
-	public void saveWeixinOrderInfo(FinaceOrder finaceOrder);
+	public void saveWeixinOrderInfo(FinaceOrder finaceOrder) throws SQLException;
 	
 	/**
 	 * 微信支付成功，保存结果
 	 * 根据微信返回的订单号查询数据库预存结果进行更新
 	 * @param outTradeNo
 	 */
-	public void updateWeixinOrderResult(FinaceOrder finaceOrder);
+	public void updateWeixinOrderResult(SortedMap<String, String> result) throws Exception;
 	
 	/**
 	 * 保存对账单信息    【定时任务触发】

@@ -1,5 +1,8 @@
 package com.jing.weixin.httputil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -89,9 +92,15 @@ public class HTTPClientUtils {
 				return weiXinResult;
 			}
 			 Map map = RequestHandler.doXMLParse(jsonStr);
-			 weiXinResult.setResultCode((String) map.get("return_code"));
+			 System.out.println("map"+map);
+			 weiXinResult.setResultCode((String) map.get("result_code"));
+			 weiXinResult.setReturnCode((String) map.get("return_code"));
 			 weiXinResult.setPrayId((String) map.get("prepay_id"));
 			 weiXinResult.setUrlCode((String) map.get("code_url")); // 二维码图片URL
+			 weiXinResult.setAppid((String)map.get("appid"));
+			 weiXinResult.setMchId((String)map.get("mch_id"));
+			 weiXinResult.setNonceStr((String)map.get("nonce_str"));
+			 weiXinResult.setTradeType((String)map.get("trade_type"));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -241,11 +250,10 @@ public class HTTPClientUtils {
 		return weiXinResult;
 	}
 	
-	public static WeiXinResult sendDownloadBillRequest(
+	public static String sendDownloadBillRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
-		WeiXinResult weiXinResult = new WeiXinResult();
 		//请求下载对账单的URL
 		String  requestUrl = WeixinConfig.sendDownloadBillRequestURL;
 		// 做一次签名
@@ -264,11 +272,29 @@ public class HTTPClientUtils {
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
 			HttpResponse weixinResponse = httpclient.execute(httpost);
 			jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
-			System.out.println(jsonStr);
+			jsonStr = jsonStr.replace(",", "");
+			jsonStr = jsonStr.substring(jsonStr.indexOf("费率")+2, jsonStr.indexOf("总交易单数"));
+			List<String> list =null;
+			String[] li = jsonStr.split("`");
+			if(li !=null && li.length>0){
+				list = Arrays.asList(li);
+//				for(int i=0;i<list.size();i++){
+//					if(list.get(i).equals("")){
+//						list.remove(i);
+//						list.add(i,null);
+//					}
+//				}
+			}else{
+				list = new ArrayList<String>();
+			}
+			
+//			list.addAll(li);
+//			list.remove(0);
+			System.out.println(list);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return weiXinResult;
+		return jsonStr;
 	}
 }

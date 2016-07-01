@@ -1,10 +1,14 @@
 package com.jing.weixin.entity;
-
+/**
+ * 支付结果
+ * @Description
+ *
+ */
 public class WeiXinPayResult {
 	/**
-	 * 公众账号ID
+	 * 主键
 	 */
-	private String appid;
+	private String tid;
 	/**
 	 * 商户号
 	 */
@@ -17,6 +21,10 @@ public class WeiXinPayResult {
 	 * 随机字符串
 	 */
 	private String nonceStr;
+	/**
+	 * 签名
+	 */
+	private String sign;
 	/**
 	 * 业务结果
 	 */
@@ -76,15 +84,15 @@ public class WeiXinPayResult {
 	/**
 	 * 代金券类型
 	 */
-	private String couponType$n;
+	private String couponType;
 	/**
 	 * 代金券ID
 	 */
-	private String couponId$n;
+	private String couponId;
 	/**
 	 * 单个代金券支付金额
 	 */
-	private String couponFee$n;
+	private String couponFeeN;
 	/**
 	 * 微信支付订单号
 	 */
@@ -101,13 +109,56 @@ public class WeiXinPayResult {
 	 * 支付完成时间
 	 */
 	private String timeEnd;
+	/**
+	 * 同步
+	 */
+	private String sync;
+	/**
+	 * 机构ID
+	 */
+	private String orgId;
+	/**
+	 * 机构名称
+	 */
+	private String orgName;
+	/**
+	 * 机构财务ID
+	 */
+	private String finaceId;
+	/**
+	 * 营服ID
+	 */
+	private String clothingId;
+	/**
+	 * 营服名称
+	 */
+	private String clothingName;
+	/**
+	 * 姓名
+	 */
+	private String name;
+	/**
+	 * 金额
+	 */
+	private String paySum;
+	/**
+	 * 身份证
+	 */
+	private String idcard;
+	/**
+	 * 手机号
+	 */
+	private String mobile;
+	/**
+	 * 备注
+	 */
+	private String remark;
 	
-	
-	public String getAppid() {
-		return appid;
+	public String getTid() {
+		return tid;
 	}
-	public void setAppid(String appid) {
-		this.appid = appid;
+	public void setTid(String tid) {
+		this.tid = tid;
 	}
 	public String getMchId() {
 		return mchId;
@@ -126,6 +177,12 @@ public class WeiXinPayResult {
 	}
 	public void setNonceStr(String nonceStr) {
 		this.nonceStr = nonceStr;
+	}
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 	public String getResultCode() {
 		return resultCode;
@@ -211,23 +268,23 @@ public class WeiXinPayResult {
 	public void setCouponCount(String couponCount) {
 		this.couponCount = couponCount;
 	}
-	public String getCouponType$n() {
-		return couponType$n;
+	public String getCouponType() {
+		return couponType;
 	}
-	public void setCouponType$n(String couponType$n) {
-		this.couponType$n = couponType$n;
+	public void setCouponType(String couponType) {
+		this.couponType = couponType;
 	}
-	public String getCouponId$n() {
-		return couponId$n;
+	public String getCouponId() {
+		return couponId;
 	}
-	public void setCouponId$n(String couponId$n) {
-		this.couponId$n = couponId$n;
+	public void setCouponId(String couponId) {
+		this.couponId = couponId;
 	}
-	public String getCouponFee$n() {
-		return couponFee$n;
+	public String getCouponFeeN() {
+		return couponFeeN;
 	}
-	public void setCouponFee$n(String couponFee$n) {
-		this.couponFee$n = couponFee$n;
+	public void setCouponFeeN(String couponFeeN) {
+		this.couponFeeN = couponFeeN;
 	}
 	public String getTransactionId() {
 		return transactionId;
@@ -252,6 +309,72 @@ public class WeiXinPayResult {
 	}
 	public void setTimeEnd(String timeEnd) {
 		this.timeEnd = timeEnd;
+	}
+	public String getSync() {
+		return sync;
+	}
+	public void setSync(String sync) {
+		this.sync = sync;
+	}
+	public String getOrgId() {
+		return orgId;
+	}
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+	public String getOrgName() {
+		return orgName;
+	}
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+	public String getFinaceId() {
+		return finaceId;
+	}
+	public void setFinaceId(String finaceId) {
+		this.finaceId = finaceId;
+	}
+	public String getClothingId() {
+		return clothingId;
+	}
+	public void setClothingId(String clothingId) {
+		this.clothingId = clothingId;
+	}
+	public String getClothingName() {
+		return clothingName;
+	}
+	public void setClothingName(String clothingName) {
+		this.clothingName = clothingName;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPaySum() {
+		return paySum;
+	}
+	public void setPaySum(String paySum) {
+		this.paySum = paySum;
+	}
+	public String getIdcard() {
+		return idcard;
+	}
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 	

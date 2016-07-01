@@ -29,21 +29,49 @@ public class FinaceOrder extends WeiXinReq{
 	/**
 	 * 生效时间
 	 */
-	private Date createDate;
+	private String createDate;
 	
 	/**
 	 * 修改时间
 	 */
-	private Date modifyDate;
+	private String modifyDate;
 	
 	/**
 	 * 微信支付结果状态，0未支付成功，1已支付成功
 	 */
 	private String weixinStatus;
 	/**
-	 * 支付结果通知
+	 * 业务结果
 	 */
-	private WeiXinPayResult payResult;
+	private String resultCode;
+	/**
+	 * 商户号
+	 */
+	private String mchId;
+	/**
+	 * 预支付交易会话标识
+	 */
+	private String prepayId;
+	/**
+	 * 公众账号ID
+	 */
+	private String appid;
+	/**
+	 * 二维码链接
+	 */
+	private String codeUrl;
+	/**
+	 * 随机字符串
+	 */
+	private String nonceStr;
+	/**
+	 * 返回状态码
+	 */
+	private String returnCode;
+	/**
+	 * 交易类型
+	 */
+	private String tradeType;
 	
 	public FinaceOrder(){}
 	
@@ -61,12 +89,69 @@ public class FinaceOrder extends WeiXinReq{
 		this.urlId = weiXinReq.getUrlId();
 	}
 	
-	public WeiXinPayResult getPayResult() {
-		return payResult;
+	
+	public String getResultCode() {
+		return resultCode;
 	}
 
-	public void setPayResult(WeiXinPayResult payResult) {
-		this.payResult = payResult;
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
+	}
+
+	public String getMchId() {
+		return mchId;
+	}
+
+	public void setMchId(String mchId) {
+		this.mchId = mchId;
+	}
+
+	public String getPrepayId() {
+		return prepayId;
+	}
+
+	public void setPrepayId(String prepayId) {
+		this.prepayId = prepayId;
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public String getCodeUrl() {
+		return codeUrl;
+	}
+
+	public void setCodeUrl(String codeUrl) {
+		this.codeUrl = codeUrl;
+	}
+
+	public String getNonceStr() {
+		return nonceStr;
+	}
+
+	public void setNonceStr(String nonceStr) {
+		this.nonceStr = nonceStr;
+	}
+
+	public String getReturnCode() {
+		return returnCode;
+	}
+
+	public void setReturnCode(String returnCode) {
+		this.returnCode = returnCode;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
 	}
 
 	public String getTradeNo() {
@@ -101,19 +186,19 @@ public class FinaceOrder extends WeiXinReq{
 		this.sync = sync;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 

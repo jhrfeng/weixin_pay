@@ -24,7 +24,66 @@ public class WeiXinResult {
 	
 	public String resultCode;
 	
+	public String returnCode;
+	
 	public String message;
+	/**
+	 * 公众账号ID
+	 */
+	public String appid;
+	/**
+	 * 商户号
+	 */
+	public String mchId;
+	/**
+	 * 随机字符串
+	 */
+	public String nonceStr;
+	/**
+	 * 交易类型
+	 */
+	public String tradeType;
+	
+	
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public String getMchId() {
+		return mchId;
+	}
+
+	public void setMchId(String mchId) {
+		this.mchId = mchId;
+	}
+
+	public String getNonceStr() {
+		return nonceStr;
+	}
+
+	public void setNonceStr(String nonceStr) {
+		this.nonceStr = nonceStr;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
+	}
+
+	public String getReturnCode() {
+		return returnCode;
+	}
+
+	public void setReturnCode(String returnCode) {
+		this.returnCode = returnCode;
+	}
 
 	public String getResultCode() {
 		return resultCode;
