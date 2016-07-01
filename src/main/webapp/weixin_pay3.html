@@ -51,10 +51,10 @@
 	}
 </style>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="http://duniao.eicp.net/wxpay/js/md5.js"></script>
-<script src="http://duniao.eicp.net/wxpay/js/jquery.js"></script>
-<script src="http://duniao.eicp.net/wxpay/js/jquery.qrcode.js"></script>
-<script src="http://duniao.eicp.net/wxpay/js/qrcode.js"></script>
+<script src="http://ljh5522.xicp.net//wxpay/js/md5.js"></script>
+<script src="http://ljh5522.xicp.net//wxpay/js/jquery.js"></script>
+<script src="http://ljh5522.xicp.net//wxpay/js/jquery.qrcode.js"></script>
+<script src="http://ljh5522.xicp.net//wxpay/js/qrcode.js"></script>
 <script Language="javascript">
     //当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
@@ -63,9 +63,9 @@
 
    //调用微信支付程式
    function callpay(){
- 	var url = "http://duniao.eicp.net/wxpay/config/weixinNativePay";
+ 	var url = "http://ljh5522.xicp.net//wxpay/config/weixinNativePay";
  	$.post(url,{"totalNum":$("#payfee").val(),"remark":"押金电子收费"}, function(data){
- 		$('#qrcode-icon').html('');
+ 		//$('#qrcode-icon').html('');
  		$('#qrcode-icon').qrcode(data.urlCode); //任意字符串 
  		var can = document.getElementsByTagName("canvas");
  		var src = can[0].toDataURL("image/png");
