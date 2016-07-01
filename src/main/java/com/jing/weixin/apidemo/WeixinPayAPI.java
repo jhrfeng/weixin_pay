@@ -1,8 +1,10 @@
 package com.jing.weixin.apidemo;
 
+import java.util.List;
 import java.util.SortedMap;
 import java.util.UUID;
 
+import com.jing.weixin.entity.WeiXinBill;
 import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.httputil.HTTPClientUtils;
 import com.jing.weixin.httputil.RequestHandler;
@@ -25,7 +27,6 @@ public class WeixinPayAPI {
 		packageParams.put("notify_url", WeixinConfig.NOTIFYURL); //通知地址
 		packageParams.put("trade_type", "NATIVE"); // 交易类型
 		/**** 报文中非必填字段  *****/
-		
 		
 		WeiXinResult eiXinResult = 
 				HTTPClientUtils.sendNativeOrderRequest(packageParams, WeixinConfig.KEY);
@@ -68,7 +69,7 @@ public class WeixinPayAPI {
 		packageParams.put("nonce_str", nonceStr.replace("-", "")); //随机字符串
 		//订单查询的两种方式(微信订单号优先使用)
 //		packageParams.put("out_trade_no", "201606271009352720"); //商品订单号(方式一)
-		packageParams.put("transaction_id", "4000092001201606277956532063"); //微信订单号(方式二)
+		packageParams.put("transaction_id", "4004462001201606308127299731"); //微信订单号(方式二)
 		/**** 报文中非必填字段  *****/
 		
 		WeiXinResult eiXinResult = HTTPClientUtils.sendOrdersQueryRequest(packageParams, WeixinConfig.KEY);
@@ -148,7 +149,7 @@ public class WeixinPayAPI {
 	 * @param packageParams
 	 * @return
 	 */
-	public static String downloadBill(SortedMap<String, String> packageParams){
+	public static List<WeiXinBill> downloadBill(SortedMap<String, String> packageParams){
 		/**** 报文中必填字段  *****/
 		String nonceStr = UUID.randomUUID().toString().toUpperCase();
 		packageParams.put("appid", WeixinConfig.APPID); //公众账号ID
@@ -159,8 +160,8 @@ public class WeixinPayAPI {
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "ALL");//账单类型
 		
-		String result = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
-		return result;
+		List<WeiXinBill> bill = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+		return bill;
 	}
 	
 	/**
@@ -179,7 +180,7 @@ public class WeixinPayAPI {
 		packageParams.put("device_info", "013467007045764");//设备号
 		packageParams.put("bill_type", "");//账单类型
 		WeiXinResult eiXinResult = new WeiXinResult();
-		String result = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
+//		String result = HTTPClientUtils.sendDownloadBillRequest(packageParams, WeixinConfig.KEY);
 		return eiXinResult;
 	}
 

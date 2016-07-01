@@ -20,10 +20,12 @@ import org.springframework.stereotype.Service;
 
 
 
+
 import com.cntaiping.intserv.basic.runtime.db.DBUtil;
 import com.cntaiping.intserv.basic.runtime.db.DBUtilExt;
 import com.jing.weixin.apidemo.WeixinPayAPI;
 import com.jing.weixin.entity.FinaceOrder;
+import com.jing.weixin.entity.WeiXinBill;
 import com.jing.weixin.entity.WeiXinPayResult;
 import com.jing.weixin.service.WeixinService;
 import com.jing.weixin.utils.SqlConvertHelper;
@@ -40,19 +42,19 @@ public class WeixinServiceImp implements WeixinService{
 		
 		Connection conn = DBUtil.getConnection();
 		String sql ="";
-		sql ="insert into table_XXX(clothing_id,clothing_name,create_date,finace_id,idcard,mobile,modify_date,name,org_id,org_name,remark,status,sync,total_num,trade_no,"+
+		sql ="insert into table_XXX(dept_id,dept_name,create_date,gl_organ,idcard,mobile,modify_date,name,organ_id,company_name,remark,status,sync,total_num,trade_no,"+
 		"url_id,result_code,mch_id,prepay_id,appid,code_url,nonce_str,return_code,trade_type) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		List<String> list = new ArrayList<String>();
-		list.add(finaceOrder.getClothingId());
-		list.add(finaceOrder.getClothingName());
+		list.add(finaceOrder.getDeptId());
+		list.add(finaceOrder.getDeptName());
 		list.add(finaceOrder.getCreateDate());
-		list.add(finaceOrder.getFinaceId());
+		list.add(finaceOrder.getGlOrgan());
 		list.add(finaceOrder.getIdcard());
 		list.add(finaceOrder.getMobile());
 		list.add(finaceOrder.getModifyDate());
 		list.add(finaceOrder.getName());
-		list.add(finaceOrder.getOrgId());
-		list.add(finaceOrder.getOrgName());
+		list.add(finaceOrder.getOrganId());
+		list.add(finaceOrder.getCompanyName());
 		list.add(finaceOrder.getRemark());
 		list.add(finaceOrder.getStatus());
 		list.add(finaceOrder.getSync());
@@ -108,11 +110,13 @@ public class WeixinServiceImp implements WeixinService{
 		}else{
 			System.out.println("支付失败");
 		}
-		
 	}
 	
 	public void saveStatemenetOrder(SortedMap<String, String> packageParams){
-		String result =WeixinPayAPI.downloadBill(packageParams);
 		
+		List<WeiXinBill> bill =WeixinPayAPI.downloadBill(packageParams);
+		for(WeiXinBill tt:bill){
+			System.out.println(tt.getAppid());
+		}
 	}
 }

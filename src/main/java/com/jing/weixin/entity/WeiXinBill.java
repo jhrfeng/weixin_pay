@@ -72,7 +72,7 @@ public class WeiXinBill {
 	/**
 	 * 商户退款单号
 	 */
-	private String out_refundNo;
+	private String outRefundNo;
 	/**
 	 * 退款金额
 	 */
@@ -218,14 +218,14 @@ public class WeiXinBill {
 	public void setRefundId(String refundId) {
 		this.refundId = refundId;
 	}
-	public String getOut_refundNo() {
-		return out_refundNo;
-	}
-	public void setOut_refundNo(String out_refundNo) {
-		this.out_refundNo = out_refundNo;
-	}
 	public String getSettlementRefundFee() {
 		return settlementRefundFee;
+	}
+	public String getOutRefundNo() {
+		return outRefundNo;
+	}
+	public void setOutRefundNo(String outRefundNo) {
+		this.outRefundNo = outRefundNo;
 	}
 	public void setSettlementRefundFee(String settlementRefundFee) {
 		this.settlementRefundFee = settlementRefundFee;

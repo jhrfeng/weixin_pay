@@ -81,11 +81,11 @@ public class FinaceOrder extends WeiXinReq{
 		this.remark = weiXinReq.getRemark();
 		this.idcard = weiXinReq.getIdcard();
 		this.mobile = weiXinReq.getMobile();
-		this.orgId = weiXinReq.getOrgId();
-		this.orgName = weiXinReq.getOrgName();
-		this.finaceId = weiXinReq.getFinaceId();
-		this.clothingId = weiXinReq.getClothingId();
-		this.clothingName = weiXinReq.getClothingName();
+		this.organId = weiXinReq.getOrganId();
+		this.companyName = weiXinReq.getCompanyName();
+		this.glOrgan = weiXinReq.getGlOrgan();
+		this.deptId = weiXinReq.getDeptId();
+		this.deptName = weiXinReq.getDeptName();
 		this.urlId = weiXinReq.getUrlId();
 	}
 	

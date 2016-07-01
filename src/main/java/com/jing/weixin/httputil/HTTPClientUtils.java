@@ -16,6 +16,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.jing.weixin.entity.WeiXinBill;
 import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.utils.WeixinConfig;
 
@@ -250,7 +251,7 @@ public class HTTPClientUtils {
 		return weiXinResult;
 	}
 	
-	public static String sendDownloadBillRequest(
+	public static List<WeiXinBill> sendDownloadBillRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
@@ -267,34 +268,52 @@ public class HTTPClientUtils {
 		client.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 		HttpPost httpost = HttpClientConnectionManager.getPostMethod(requestUrl);
 		String jsonStr = "";
+		List<WeiXinBill> billlist = new ArrayList<WeiXinBill>();
 		try{
 			// 处理返回结果
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
 			HttpResponse weixinResponse = httpclient.execute(httpost);
 			jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
 			jsonStr = jsonStr.replace(",", "");
+			jsonStr = jsonStr.replaceAll("\r|\n", "");
 			jsonStr = jsonStr.substring(jsonStr.indexOf("费率")+2, jsonStr.indexOf("总交易单数"));
-			List<String> list =null;
 			String[] li = jsonStr.split("`");
-			if(li !=null && li.length>0){
-				list = Arrays.asList(li);
-//				for(int i=0;i<list.size();i++){
-//					if(list.get(i).equals("")){
-//						list.remove(i);
-//						list.add(i,null);
-//					}
-//				}
-			}else{
-				list = new ArrayList<String>();
+			WeiXinBill bill = new WeiXinBill();
+			int count = (li.length)/24;
+			for(int i=0;i<count;i++){
+				for(int j=1;j<li.length;j++){
+					bill.setTradeTime(li[j]);
+					bill.setAppid(li[j+1]);
+					bill.setMchId(li[j+2]);
+					bill.setSubMchId(li[j+3]);
+					bill.setDeviceInfo(li[j+4]);
+					bill.setTransactionId(li[j+5]);
+					bill.setOutTradeNo(li[j+6]);
+					bill.setOpenid(li[j+7]);
+					bill.setTradeType(li[j+8]);
+					bill.setTradeState(li[j+9]);
+					bill.setBankType(li[j+10]);
+					bill.setFeeType(li[j+11]);
+					bill.setTotalFee(li[j+12]);
+					bill.setCouponFee(li[j+13]);
+					bill.setRefundId(li[j+14]);
+					bill.setOutRefundNo(li[j+15]);
+					bill.setSettlementRefundFee(li[j+16]);
+					bill.setCouponRefundFee(li[j+17]);
+					bill.setRefundType(li[j+18]);
+					bill.setRefundStatus(li[j+19]);
+					bill.setCommodityname(li[j+20]);
+					bill.setAttach(li[j+21]);
+					bill.setFee(li[j+22]);
+					bill.setRate(li[j+23]);
+					billlist.add(bill);
+					j=j+24;
+					break;
+				}
 			}
-			
-//			list.addAll(li);
-//			list.remove(0);
-			System.out.println(list);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		return jsonStr;
+		return billlist;
 	}
 }

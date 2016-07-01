@@ -22,6 +22,7 @@ import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.httputil.RequestHandler;
 import com.jing.weixin.httputil.ResponseHandler;
 import com.jing.weixin.service.WeixinService;
+import com.jing.weixin.serviceImp.WeixinServiceImp;
 import com.jing.weixin.utils.WeixinConfig;
 
 
@@ -32,7 +33,7 @@ import com.jing.weixin.utils.WeixinConfig;
 public class TestWeixin {
 	
 	@Autowired
-	private WeixinService weiXinService;
+	private WeixinServiceImp weiXinService;
 	
 	 @RequestMapping(value="weixinJsApiPay")
 	 @ResponseBody
@@ -64,6 +65,8 @@ public class TestWeixin {
 		packageParams.put("spbill_create_ip", request.getRemoteHost()); // 终端IP
 		packageParams.put("product_id","TPYX001"); //商品ID，NATIVE必填
 		packageParams.put("out_trade_no",outTradeNo); //商品订单号
+		/**** 报文中非必填字段  *****/
+		packageParams.put("attach", params.getDeptId()+","+params.getDeptName());//附加数据
 		
 		WeiXinResult result = WeixinPayAPI.nativeOrder(packageParams);
 		

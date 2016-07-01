@@ -116,23 +116,23 @@ public class WeiXinPayResult {
 	/**
 	 * 机构ID
 	 */
-	private String orgId;
+	private String organId;
 	/**
 	 * 机构名称
 	 */
-	private String orgName;
+	private String companyName;
 	/**
 	 * 机构财务ID
 	 */
-	private String finaceId;
+	private String glOrgan;
 	/**
 	 * 营服ID
 	 */
-	private String clothingId;
+	private String deptId;
 	/**
 	 * 营服名称
 	 */
-	private String clothingName;
+	private String deptName;
 	/**
 	 * 姓名
 	 */
@@ -316,35 +316,36 @@ public class WeiXinPayResult {
 	public void setSync(String sync) {
 		this.sync = sync;
 	}
-	public String getOrgId() {
-		return orgId;
+	
+	public String getOrganId() {
+		return organId;
 	}
-	public void setOrgId(String orgId) {
-		this.orgId = orgId;
+	public void setOrganId(String organId) {
+		this.organId = organId;
 	}
-	public String getOrgName() {
-		return orgName;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
-	public String getFinaceId() {
-		return finaceId;
+	public String getGlOrgan() {
+		return glOrgan;
 	}
-	public void setFinaceId(String finaceId) {
-		this.finaceId = finaceId;
+	public void setGlOrgan(String glOrgan) {
+		this.glOrgan = glOrgan;
 	}
-	public String getClothingId() {
-		return clothingId;
+	public String getDeptId() {
+		return deptId;
 	}
-	public void setClothingId(String clothingId) {
-		this.clothingId = clothingId;
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
-	public String getClothingName() {
-		return clothingName;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setClothingName(String clothingName) {
-		this.clothingName = clothingName;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public String getName() {
 		return name;
