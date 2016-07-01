@@ -261,6 +261,14 @@ public class RequestHandler {
 		  String dateString = formatter.format(currentTime)+TenpayUtil.buildRandom(4);
 		  return dateString;
 	 }
+	 
+	 //
+	 public static String newDate() {
+		  Date currentTime = new Date();
+		  SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		  String dateString = formatter.format(currentTime);
+		  return dateString;
+	 }
 
 }
 

@@ -1,5 +1,6 @@
 package com.jing.weixin.job;
 
+import java.sql.SQLException;
 import java.util.SortedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,11 @@ public class WeiXinJob {
 	 */
 	public void asyncStatementOrder(){
 		SortedMap<String, String> packageParams = null;
-		weixinService.saveStatemenetOrder(packageParams);
+		try {
+			weixinService.saveStatemenetOrder(packageParams);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

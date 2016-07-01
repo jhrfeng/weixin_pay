@@ -31,6 +31,6 @@ public interface WeixinService {
        4、对账单接口只能下载三个月以内的账单。
 	 * 
 	 */
-	public void saveStatemenetOrder(SortedMap<String, String> packageParams);
+	public void saveStatemenetOrder(SortedMap<String, String> packageParams) throws SQLException;
 
 }
