@@ -16,6 +16,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.jing.weixin.entity.DailySummary;
 import com.jing.weixin.entity.WeiXinBill;
 import com.jing.weixin.entity.WeiXinResult;
 import com.jing.weixin.utils.WeixinConfig;
@@ -251,7 +252,7 @@ public class HTTPClientUtils {
 		return weiXinResult;
 	}
 	
-	public static List<WeiXinBill> sendDownloadBillRequest(
+	public static String sendDownloadBillRequest(
 			SortedMap<String, String> packageParams,
 			String key
 				){
@@ -274,10 +275,20 @@ public class HTTPClientUtils {
 			httpost.setEntity(new StringEntity(xmlParam, "UTF-8"));
 			HttpResponse weixinResponse = httpclient.execute(httpost);
 			jsonStr = EntityUtils.toString(weixinResponse.getEntity(), "UTF-8");
+			
 			jsonStr = jsonStr.replace(",", "");
 			jsonStr = jsonStr.replaceAll("\r|\n", "");
+			String sumStr = jsonStr.substring(jsonStr.indexOf("手续费总金额")+6,jsonStr.length());
 			jsonStr = jsonStr.substring(jsonStr.indexOf("费率")+2, jsonStr.indexOf("总交易单数"));
 			String[] li = jsonStr.split("`");
+			String[] suml = sumStr.split("`");
+			DailySummary summary = new DailySummary();
+			summary.setTradeTime(li[1]);
+			summary.setTradeNum(suml[1]);
+			summary.setTradeSum(suml[2]);
+			summary.setFeeSum(suml[3]);
+			summary.setCompanySum(suml[4]);
+			summary.setTotalSum(suml[5]);
 			WeiXinBill bill = new WeiXinBill();
 			int count = (li.length)/24;
 			for(int i=0;i<count;i++){
@@ -314,6 +325,6 @@ public class HTTPClientUtils {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return billlist;
+		return jsonStr;
 	}
 }

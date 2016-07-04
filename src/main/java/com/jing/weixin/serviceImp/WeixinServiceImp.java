@@ -2,6 +2,7 @@ package com.jing.weixin.serviceImp;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,24 +22,31 @@ import org.springframework.stereotype.Service;
 
 
 
+
+
+
+
 import com.cntaiping.intserv.basic.runtime.db.DBUtil;
 import com.cntaiping.intserv.basic.runtime.db.DBUtilExt;
 import com.jing.weixin.apidemo.WeixinPayAPI;
+import com.jing.weixin.entity.DailySummary;
 import com.jing.weixin.entity.FinaceOrder;
 import com.jing.weixin.entity.WeiXinBill;
 import com.jing.weixin.entity.WeiXinPayResult;
+import com.jing.weixin.httputil.RequestHandler;
 import com.jing.weixin.service.WeixinService;
 import com.jing.weixin.utils.SqlConvertHelper;
 
 @Service("WeixinService")
 public class WeixinServiceImp implements WeixinService{
-
+	
+	@Override  
 	public void saveWeixinOrderInfo(FinaceOrder finaceOrder) throws SQLException{
 		finaceOrder.setSync("0");
 		finaceOrder.setStatus("0");
 		finaceOrder.setWeixinStatus("0");
-		finaceOrder.setCreateDate("20160101");
-		finaceOrder.setModifyDate("20160101");
+		finaceOrder.setCreateDate(RequestHandler.newDate());
+		finaceOrder.setModifyDate(RequestHandler.newDate());
 		
 		Connection conn = DBUtil.getConnection();
 		String sql ="";
@@ -78,6 +86,7 @@ public class WeixinServiceImp implements WeixinService{
 		 
 	}
 	
+	@Override  
 	public void updateWeixinOrderResult(SortedMap<String, String> result) throws SQLException{
 		String outTradeNo =  result.get("out_trade_no"); //商户订单号
 		String tSql = "select count(1) result_flag from table_XX where out_trade_no = ?";
@@ -112,11 +121,75 @@ public class WeixinServiceImp implements WeixinService{
 		}
 	}
 	
-	public void saveStatemenetOrder(SortedMap<String, String> packageParams){
+	@Override
+	public void saveStatemenetOrder(SortedMap<String, String> packageParams) throws SQLException{
+		String jsonStr =WeixinPayAPI.downloadBill(packageParams);
+		List<WeiXinBill> billlist = new ArrayList<WeiXinBill>();
+		jsonStr = jsonStr.replace(",", "");
+		jsonStr = jsonStr.replaceAll("\r|\n", "");
+		String sumStr = jsonStr.substring(jsonStr.indexOf("手续费总金额")+6,jsonStr.length());
+		jsonStr = jsonStr.substring(jsonStr.indexOf("费率")+2, jsonStr.indexOf("总交易单数"));
+		String[] li = jsonStr.split("`");
+		String[] suml = sumStr.split("`");
+		DailySummary summary = new DailySummary();
+		summary.setTradeTime(li[1]);
+		summary.setTradeNum(suml[1]);
+		summary.setTradeSum(suml[2]);
+		summary.setFeeSum(suml[3]);
+		summary.setCompanySum(suml[4]);
+		summary.setTotalSum(suml[5]);
 		
-		List<WeiXinBill> bill =WeixinPayAPI.downloadBill(packageParams);
-		for(WeiXinBill tt:bill){
-			System.out.println(tt.getAppid());
+		WeiXinBill bill = new WeiXinBill();
+		int count = (li.length)/24;
+		for(int i=0;i<count;i++){
+			for(int j=1;j<li.length;j++){
+				bill.setTradeTime(li[j]);
+				bill.setAppid(li[j+1]);
+				bill.setMchId(li[j+2]);
+				bill.setSubMchId(li[j+3]);
+				bill.setDeviceInfo(li[j+4]);
+				bill.setTransactionId(li[j+5]);
+				bill.setOutTradeNo(li[j+6]);
+				bill.setOpenid(li[j+7]);
+				bill.setTradeType(li[j+8]);
+				bill.setTradeState(li[j+9]);
+				bill.setBankType(li[j+10]);
+				bill.setFeeType(li[j+11]);
+				bill.setTotalFee(li[j+12]);
+				bill.setCouponFee(li[j+13]);
+				bill.setRefundId(li[j+14]);
+				bill.setOutRefundNo(li[j+15]);
+				bill.setSettlementRefundFee(li[j+16]);
+				bill.setCouponRefundFee(li[j+17]);
+				bill.setRefundType(li[j+18]);
+				bill.setRefundStatus(li[j+19]);
+				bill.setCommodityname(li[j+20]);
+				bill.setAttach(li[j+21]);
+				bill.setFee(li[j+22]);
+				bill.setRate(li[j+23]);
+				billlist.add(bill);
+				j=j+24;
+				break;
+			}
 		}
+		
+		//保存每日汇总账单
+		String sql ="";
+		sql = "insert into table(trade_time,trade_num,trade_sum,fee_sum,company_sum,total_sum,create_date,modify_date,status,sync)"+
+		"values(?,?,?,?,?,?,?,?,?,?)";
+		List<String> sqlList = new ArrayList<String>();
+		sqlList.add(summary.getTradeTime());
+		sqlList.add(summary.getTradeNum());
+		sqlList.add(summary.getTradeSum());
+		sqlList.add(summary.getFeeSum());
+		sqlList.add(summary.getCompanySum());
+		sqlList.add(summary.getTotalSum());
+		sqlList.add(RequestHandler.newDate());
+		sqlList.add(RequestHandler.newDate());
+		sqlList.add("0");
+		sqlList.add("0");
+		StringBuffer buffSql = new StringBuffer(sql);
+		SqlConvertHelper.sqlRemoveNull(buffSql,sqlList);
+		DBUtilExt.update(buffSql.toString(), sqlList.toArray());
 	}
 }

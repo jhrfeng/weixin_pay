@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +34,8 @@ import com.jing.weixin.utils.WeixinConfig;
 public class TestWeixin {
 	
 	@Autowired
-	private WeixinServiceImp weiXinService;
+//	@Qualifier("WeixinService")
+	private WeixinService weiXinService;
 	
 	 @RequestMapping(value="weixinJsApiPay")
 	 @ResponseBody
@@ -80,7 +82,9 @@ public class TestWeixin {
 		finaceOrder.setNonceStr(result.getNonceStr());
 		finaceOrder.setTradeType(result.getTradeType());
 		try {
-			weiXinService.saveWeixinOrderInfo(finaceOrder);
+			if("SUCCESS".equals(result.getResultCode())){
+				weiXinService.saveWeixinOrderInfo(finaceOrder);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
