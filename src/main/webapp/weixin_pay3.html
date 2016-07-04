@@ -63,6 +63,13 @@
 
    //调用微信支付程式
    function callpay(){
+    alert($("input['name=test']").val());
+    if($("input[name='username']").val()==""){
+		alert("姓名不能为空");
+	}
+	if($("input[name='payfee']").val()==""){
+		alert("押金不能为空");
+	}
  	var url = "http://ljh5522.xicp.net//wxpay/config/weixinNativePay";
  	$.post(url,{"totalNum":$("#payfee").val(),"remark":"押金电子收费"}, function(data){
  		//$('#qrcode-icon').html('');
