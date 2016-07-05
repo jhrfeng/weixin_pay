@@ -9,10 +9,11 @@
 		// typeNumber < 1 for automatic calculation
 		options	= $.extend( {}, {
 			render		: "canvas",
-			width		: 256,
-			height		: 256,
+			width		: 100,
+			height		: 80,
 			typeNumber	: -1,
 			correctLevel	: QRErrorCorrectLevel.H,
+		
                         background      : "#ffffff",
                         foreground      : "#000000"
 		}, options);

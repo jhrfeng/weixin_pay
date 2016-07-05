@@ -49,6 +49,10 @@
 		color: #19667d;
 		background: #70c9e3;
 	}
+	.gray {
+	color: #19667d;
+	background: #CCC;
+	}
 </style>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/md5.js"></script>
@@ -57,7 +61,22 @@
 <script src="http://127.0.0.1:8080/wxpay/js/qrcode.js"></script>
 <script Language="javascript">
 
-    // aletr(window.href.url);
+	function strToObj(str){
+		str = str.replace(/&/g, "','" );
+		str = str.replace(/=/g, "':'" );
+		str = "({'" +str + "'})" ;
+		obj = eval(str);
+		return obj;
+	}
+		
+	var str= decodeURI(window.location.search);
+	//var str= //"http://127.0.0.1:8080/wxpay/weixin_pay4.html?organId=1&companyName=戴尔&glOrgan=1&deptId=2&deptName=嘿";
+	
+	var ob= strToObj(str.substring(1));
+	alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); 
+	
+	
+    //alert(ob.organId+"--"+ob.companyName);
     //当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
         WeixinJSBridge.log('yo~ ready.');
@@ -66,6 +85,9 @@
     //获得焦点时
     function FocusItem(obj)
 	{
+    	$("#pay").removeClass('gray');
+   	 	$("#pay").addClass('blue');
+    	 $("#pay").removeAttr("disabled");
     	document.getElementById(obj.id+"Div").innerHTML="";
 	}
     
@@ -76,13 +98,13 @@
   	 switch(obj.id) {
     		 case "username":
 				if(obj.value == '') {
-					$("#usernameDiv").html("姓名不能为空");
+					$("#usernameDiv").html("非空");
 					return false;
 				}
 				break;
     		 case "payfee":
  				if(obj.value.trim() == '') {
- 					$("#payfeeDiv").html("金额不能为空");
+ 					$("#payfeeDiv").html("非空");
  					return false;
  				}
  				break;
@@ -92,16 +114,17 @@
  					var reg = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
  		    		// 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
  		    		if(!reg.test(idcard)){
- 		    			$("#idcardDiv").html("身份证号码不正确");
+ 		    			$("#idcardDiv").html("格式错误");
  		    			return false;
  		    		} 
  				}
  				break;
     		 case "mobile":
+    			 var mobile = obj.value.trim();
  				if(obj.value.trim() != '' && obj.value.trim().length>0) {
  					var reg = /^1[3|4|5|7|8]\d{9}$/;
  		    		if(!reg.test(mobile)){
- 		    			$("#mobileDiv").html("手机号码不正确");
+ 		    			$("#mobileDiv").html("格式错误");
  		    			return false;
  		    		} 
  				}
@@ -127,15 +150,27 @@
 	document.write("解码后的" + uridc);  */
 	if(checkForm(frm)){
 	 	var url = "http://127.0.0.1:8080/wxpay/config/weixinNativePay";
-		var uriec = encodeURI(url); 
-		document.write("编码后的" + uriec); 
+			var uriec = encodeURI(url); 	
+		//document.write("编码后的" + uriec); 
+		var str= decodeURI(window.location.search);
+		var ob= strToObj(str.substring(1));
+		alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); //2012-02-01
 		
-	 	$.post(uriec,{"totalNum":$("#payfee").val(),"remark":"押金电子收费"}, function(data){
+		
+	 	$.post(uriec,{"name":$("#username").val(),"totalNum":$("#payfee").val(),"remark":"押金电子收费",
+	 		"idcard":$("#idcard").val(),"mobile":$("#mobile").val(),"organId":ob.organId,
+	 		"companyName":ob.companyName,"glOrgan":ob.glOrgan,"deptId":ob.deptId,
+	 		"deptName":"显示营服简称"
+	 		}, function(data){
 	 		//$('#qrcode-icon').html('');
 	 		$('#qrcode-icon').qrcode(data.urlCode); //任意字符串 
 	 		var can = document.getElementsByTagName("canvas");
 	 		var src = can[0].toDataURL("image/png");
-	 		$(can).replaceWith("<img src='"+src+"' />");
+	 		//$(can).replaceWith("<img src='"+src+"' />");
+	 		$("#pay").removeClass('blue');
+	 		$("#pay").addClass('gray');
+	 		$("#pay").attr({"disabled":"disabled"});
+	 		$('#qrcode-icon').replaceWith("<div id='qrcode-icon' style='text-align:center' ><img src='"+src+"' /></div>");
 	 	});
 	}
 
@@ -143,34 +178,44 @@
 </script>
 </head>
 <body>
+
 	<form method="post" id="mf">
-		<p style="text-align:right"><span>营服名称&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+		<p style="text-left"><span>押金电子收费-营销简称&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+		<!-- <img src="F:/wxpay2/weixin_pay/src/main/webapp/js/weixin_pay.png"/> -->
+		<img src="http://127.0.0.1:8080/wxpay/js/weixin_pay.png" width="300px"/>
 		<hr>
-		<p>姓名<font color="red">*</font>
+		<p>姓 &nbsp名<font color="red">*</font>
+		<input type="text" name="username" id="username" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款用户的真实姓名">
 		<label id="usernameDiv" style="color: red;"></label>
-		<p><input type="text" name="username" id="username" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款用户的真实姓名"></p>
+		<p></p>
 		
-		<p>金额（单位：元）<font color="red">*</font>
+		<p>金 &nbsp额<font color="red">*</font>
+		<input type="text" id="payfee" name="payfee" onfocus="FocusItem(this);" onblur="CheckItem(this);" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="请输入押金金额">
 		<label id="payfeeDiv" style="color: red;"></label>
-		<p><input type="text" id="payfee" name="payfee" onfocus="FocusItem(this);" onblur="CheckItem(this);" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="请输入押金金额"></p>
+		<p></p>
 		
-		<p>身份证
+		<p>身份证 
+		<input type="text" id="idcard" name="idcard" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款人身份证号">
 		<label id="idcardDiv" style="color: red;"></label>
-		<p><input type="text" id="idcard" name="idcard" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款人身份证号"></p>
+		<p></p>
 		
-		<p>手机号
+		<p>手机号 
+		<input type="text" id="mobile"  name="mobile" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入手机号码">
 		<label id="mobileDiv" style="color: red;"></label>
-		<p><input type="text" id="mobile" name="mobile" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入手机号码"></p>
+		<p></p>
+		
 		<p> 备注：押金电子收费 </p>
-		<p>
-			<button type="button" id="pay" class="blue" onclick="callpay(mf);" >确认付款</button>
+		<p align="center">
+			<button type="button" id="pay" class="blue"  onclick="callpay(mf);" >确认付款</button>
 			<!-- <button id="payoff" onclick="callpayoff();" >完成支付</button> -->
 <!-- 			<input type="button" value="确认支付" id="pay" onclick="callpay();" />
 			<input type="button" value="完成支付" id="payoff" onclick="callpayoff();" /> -->
 		</p>
 	 </form>
-<div id="qrcode-icon" style="width: 50px;height: 70px;text-align: center;padding: 30px 0px 0px 40px;"> 
-</div>
+	 
+	 <p>长按下面二维码进行微信支付</p>
+	<div id="qrcode-icon"> 
+	</div>
 
 
 		
@@ -197,6 +242,8 @@ function getPaySign(signStr){
     var md5SignValue =  ("" + CryptoJS.MD5(signStr)).toUpperCase();
     return md5SignValue;
 }
+
+
 </script>
 
 

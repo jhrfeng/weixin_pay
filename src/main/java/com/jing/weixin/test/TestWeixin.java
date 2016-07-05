@@ -56,6 +56,7 @@ public class TestWeixin {
 	 @ResponseBody
 	 public WeiXinResult nativeOrder(WeiXinReq params,
 			 HttpServletRequest request, HttpServletResponse response){
+		 
 		FinaceOrder finaceOrder = new FinaceOrder(params);
 		SortedMap<String, String> packageParams =  new TreeMap<String, String>();
 		String outTradeNo = RequestHandler.getRandomDateNo();
@@ -82,10 +83,11 @@ public class TestWeixin {
 		finaceOrder.setNonceStr(result.getNonceStr());
 		finaceOrder.setTradeType(result.getTradeType());
 		try {
+
 			if("SUCCESS".equals(result.getResultCode())){
-				weiXinService.saveWeixinOrderInfo(finaceOrder);
+//				weiXinService.saveWeixinOrderInfo(finaceOrder);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
