@@ -3,7 +3,7 @@ package com.jing.weixin.entity;
  * 微信log
  * @Description
  * @date 2016年6月30日 下午5:16:30
- *
+ * wx_log
  */
 public class WeiXinLog {
 	/**

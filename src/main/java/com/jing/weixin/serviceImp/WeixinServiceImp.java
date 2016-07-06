@@ -32,6 +32,7 @@ import com.jing.weixin.apidemo.WeixinPayAPI;
 import com.jing.weixin.entity.DailySummary;
 import com.jing.weixin.entity.FinaceOrder;
 import com.jing.weixin.entity.WeiXinBill;
+import com.jing.weixin.entity.WeiXinLog;
 import com.jing.weixin.entity.WeiXinPayResult;
 import com.jing.weixin.httputil.RequestHandler;
 import com.jing.weixin.service.WeixinService;
@@ -42,6 +43,15 @@ public class WeixinServiceImp implements WeixinService{
 	
 	@Override  
 	public void saveWeixinOrderInfo(FinaceOrder finaceOrder) throws SQLException{
+		
+		//记录操作日志
+		WeiXinLog weiXinLog=new WeiXinLog();
+		weiXinLog.setOptStart(RequestHandler.newDate());
+		weiXinLog.setName("保存微信订单");
+		weiXinLog.setAction("saveWeixinOrderInfo");
+		
+		
+		
 		finaceOrder.setSync("0");
 		finaceOrder.setStatus("0");
 		finaceOrder.setWeixinStatus("0");
@@ -82,8 +92,17 @@ public class WeixinServiceImp implements WeixinService{
 		
 		StringBuffer buffSql = new StringBuffer(sql);
 		SqlConvertHelper.sqlRemoveNull(buffSql,list);
-		DBUtilExt.update(buffSql.toString(), list.toArray(),conn);
-		 
+		try {
+			DBUtilExt.update(buffSql.toString(), list.toArray(),conn);
+			weiXinLog.setFlag(1+"");
+			weiXinLog.setMessage("操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			weiXinLog.setFlag(0+"");
+			weiXinLog.setMessage(e.getMessage());
+		}
+		//调用添加日志表的方法
+		saveWeixinWeiXinLog(weiXinLog);
 	}
 	
 	@Override  
@@ -188,6 +207,27 @@ public class WeixinServiceImp implements WeixinService{
 		sqlList.add(RequestHandler.newDate());
 		sqlList.add("0");
 		sqlList.add("0");
+		StringBuffer buffSql = new StringBuffer(sql);
+		SqlConvertHelper.sqlRemoveNull(buffSql,sqlList);
+		DBUtilExt.update(buffSql.toString(), sqlList.toArray());
+	}
+
+	
+	@Override
+	public void saveWeixinWeiXinLog(WeiXinLog weiXinLog) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String sql ="";
+		sql = "insert into wx_log(tid,name,action,flag,message,opt_start,opt_end)"+
+		"values(?,?,?,?,?,?,?)";
+		List<String> sqlList = new ArrayList<String>();
+		sqlList.add(UUID.randomUUID()+"");
+		sqlList.add(weiXinLog.getName());
+		sqlList.add(weiXinLog.getAction());
+		sqlList.add(weiXinLog.getFlag());
+		sqlList.add(weiXinLog.getMessage());
+		sqlList.add(weiXinLog.getOptStart());
+		sqlList.add(RequestHandler.newDate());
 		StringBuffer buffSql = new StringBuffer(sql);
 		SqlConvertHelper.sqlRemoveNull(buffSql,sqlList);
 		DBUtilExt.update(buffSql.toString(), sqlList.toArray());

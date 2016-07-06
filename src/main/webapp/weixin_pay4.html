@@ -6,7 +6,7 @@
 <title>押金电子收费</title>
 <style>
 	blockquote,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0}
-	body{font-family:"Microsoft YaHei",Helvetica,"Hiragino Sans GB",Arial,sans-serif;font-size:13px;line-height:18px;color:#737373;background-color:#fff;margin:10px 13px 10px 13px}
+	body{font-family:"Microsoft YaHei",Helvetica,"Hiragino Sans GB",Arial,sans-serif;font-size:13px;line-height:18px;color:#737373;background-color:#F5F5F5;padding-top:25px; margin:0px 23px 0px 33px}
 	table{margin:10px 0 15px 0;border-collapse:collapse}
 	td,th{border:1px solid #ddd;padding:3px 10px}
 	th{padding:5px 10px}a{color:#0069d6}
@@ -30,29 +30,57 @@
 	button {
 		display: inline-block;
 		position: relative;
-		margin: 10px;
+		margin-top:10px;
 		padding: 0 20px;
+		width:  290px;
+		height: 45px;
 		text-align: center;
 		text-decoration: none;
+		
+		 background-color:#4CAD89;
 		font: bold 12px/25px Arial, sans-serif;
+		/* 
+		 -moz-linear-gradient( top,#44A57C,#158183); 
 		text-shadow: 1px 1px 1px rgba(255,255,255, .22);
 		-webkit-border-radius: 30px;
 		border-radius: 30px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
-		box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
-		-webkit-transition: all 0.15s ease;
+		box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44); */
+/* 		-webkit-transition: all 0.15s ease;
 		-o-transition: all 0.15s ease;
 		-ms-transition: all 0.15s ease;
-		transition: all 0.15s ease;
+		transition: all 0.15s ease; */
 	}
-	.blue {
-		color: #19667d;
-		background: #70c9e3;
+	.demo_line_05{
+		   letter-spacing: -1px;
+		   color: #009762;
+		   height: 40px; 
+		   font-weight: lighter  ;
 	}
-	.gray {
-	color: #19667d;
-	background: #CCC;
+	.demo_line_05 span{
+		
+		   font-size: 19px;
+		   font-weight: 500   ;
+	} 
+	#qrcodeDiv {
+		padding-top:25px;
+		padding-bottom:20px;
+		text-align:center;
+		height:200px;
+		background-color: #4CAD89;
 	}
+	
+	#payDiv{
+		border-radius: 9px;
+	}
+	input {
+		margin-top:8px;
+		
+		width:  290px;
+		height: 41px;
+		/* border-color: #DBDFE2; */
+	}
+	
 </style>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/md5.js"></script>
@@ -60,7 +88,11 @@
 <script src="http://127.0.0.1:8080/wxpay/js/jquery.qrcode.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/qrcode.js"></script>
 <script Language="javascript">
-
+	$(function(){
+		$("#payDiv").hide();	
+	})
+	
+	
 	function strToObj(str){
 		str = str.replace(/&/g, "','" );
 		str = str.replace(/=/g, "':'" );
@@ -73,10 +105,9 @@
 	//var str= //"http://127.0.0.1:8080/wxpay/weixin_pay4.html?organId=1&companyName=戴尔&glOrgan=1&deptId=2&deptName=嘿";
 	
 	var ob= strToObj(str.substring(1));
-	alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); 
+	//alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); 
 	
-	
-    //alert(ob.organId+"--"+ob.companyName);
+
     //当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
         WeixinJSBridge.log('yo~ ready.');
@@ -154,7 +185,7 @@
 		//document.write("编码后的" + uriec); 
 		var str= decodeURI(window.location.search);
 		var ob= strToObj(str.substring(1));
-		alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); //2012-02-01
+		//alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); //2012-02-01
 		
 		
 	 	$.post(uriec,{"name":$("#username").val(),"totalNum":$("#payfee").val(),"remark":"押金电子收费",
@@ -167,9 +198,15 @@
 	 		var can = document.getElementsByTagName("canvas");
 	 		var src = can[0].toDataURL("image/png");
 	 		//$(can).replaceWith("<img src='"+src+"' />");
-	 		$("#pay").removeClass('blue');
+	 		
+	 		
+	 		/* $("#pay").removeClass('blue');
 	 		$("#pay").addClass('gray');
-	 		$("#pay").attr({"disabled":"disabled"});
+	 		$("#pay").attr({"disabled":"disabled"}); */
+	 		$("#paymentDiv").hide();
+	 		$("#payDiv").show();
+	 		
+			
 	 		$('#qrcode-icon').replaceWith("<div id='qrcode-icon' style='text-align:center' ><img src='"+src+"' /></div>");
 	 	});
 	}
@@ -178,44 +215,52 @@
 </script>
 </head>
 <body>
-
-	<form method="post" id="mf">
-		<p style="text-left"><span>押金电子收费-营销简称&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+	
 		<!-- <img src="F:/wxpay2/weixin_pay/src/main/webapp/js/weixin_pay.png"/> -->
-		<img src="http://127.0.0.1:8080/wxpay/js/weixin_pay.png" width="300px"/>
-		<hr>
-		<p>姓 &nbsp名<font color="red">*</font>
+		<div  style="text-align: center;"><img src="http://127.0.0.1:8080/wxpay/js/weixin_pay.png"  width="220px"/></div>
+		<br/>
+		<div class="demo_line_05">————————<span> 用 户 支 付  </span>———————</div>
+
+<div id="paymentDiv">	
+	<form method="post" id="mf">	
+		<p>姓名 <font color="red"> *</font>
+		<label  id="usernameDiv" style="color: red;"></label><br>
 		<input type="text" name="username" id="username" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款用户的真实姓名">
-		<label id="usernameDiv" style="color: red;"></label>
-		<p></p>
+		</p><p></p>
 		
-		<p>金 &nbsp额<font color="red">*</font>
+		<p>金额 （元）<font color="red"> *</font>
+		<label id="payfeeDiv" style="color: red;"></label><br>
 		<input type="text" id="payfee" name="payfee" onfocus="FocusItem(this);" onblur="CheckItem(this);" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="请输入押金金额">
-		<label id="payfeeDiv" style="color: red;"></label>
-		<p></p>
+		</p><p></p>
 		
 		<p>身份证 
+		<label id="idcardDiv" style="color: red;"></label><br>
 		<input type="text" id="idcard" name="idcard" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款人身份证号">
-		<label id="idcardDiv" style="color: red;"></label>
-		<p></p>
+		</p><p></p>
 		
 		<p>手机号 
+		<label id="mobileDiv" style="color: red;"></label><br>
 		<input type="text" id="mobile"  name="mobile" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入手机号码">
-		<label id="mobileDiv" style="color: red;"></label>
-		<p></p>
+		</p><p></p>
 		
-		<p> 备注：押金电子收费 </p>
-		<p align="center">
-			<button type="button" id="pay" class="blue"  onclick="callpay(mf);" >确认付款</button>
-			<!-- <button id="payoff" onclick="callpayoff();" >完成支付</button> -->
-<!-- 			<input type="button" value="确认支付" id="pay" onclick="callpay();" />
-			<input type="button" value="完成支付" id="payoff" onclick="callpayoff();" /> -->
-		</p>
-	 </form>
-	 
-	 <p>长按下面二维码进行微信支付</p>
-	<div id="qrcode-icon"> 
+		<p style="color: #929CA5;"> 备注：押金电子收费 </p>
+		<button type="button" style="color: #ffffff"  onclick="callpay(mf);" >确认付款</button>
+ </form>
+</div> 
+			
+<div id="payDiv">
+	<div id="qrcodeDiv"  > 
+		<div id="qrcode-icon"> 
+		</div>
+		<p style="color: #ffffff">长按上面二维码<br>进行微信付款</p>
 	</div>
+	<div id="infoDiv" style="background-color: #FFFFFF;"> 
+		<p>姓 &nbsp 名：<span id="codeUsername">李小明</span></p>
+		<p>金 &nbsp 额：<span id="codePayfee" style="color: #FC941C">500</span></p>
+		<p>身份证：<span id="codeIdcard">65478931597654928</span></p>
+		<p>备 &nbsp 注：<span id="codeMobile">押金收费</span></p>
+	</div>
+</div>
 
 
 		

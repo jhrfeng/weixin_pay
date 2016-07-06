@@ -9,8 +9,8 @@
 		// typeNumber < 1 for automatic calculation
 		options	= $.extend( {}, {
 			render		: "canvas",
-			width		: 100,
-			height		: 80,
+			width		: 165,
+			height		: 155,
 			typeNumber	: -1,
 			correctLevel	: QRErrorCorrectLevel.H,
 		

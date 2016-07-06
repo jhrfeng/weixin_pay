@@ -6,6 +6,7 @@ import java.util.SortedMap;
 import org.springframework.stereotype.Service;
 
 import com.jing.weixin.entity.FinaceOrder;
+import com.jing.weixin.entity.WeiXinLog;
 import com.jing.weixin.entity.WeiXinPayResult;
 
 public interface WeixinService {
@@ -32,5 +33,12 @@ public interface WeixinService {
 	 * 
 	 */
 	public void saveStatemenetOrder(SortedMap<String, String> packageParams) throws SQLException;
+	
+	
+	/**
+	 * 保存日志
+	 * @param WeiXinLog
+	 */
+	public void saveWeixinWeiXinLog(WeiXinLog weiXinLog) throws SQLException;
 
 }
