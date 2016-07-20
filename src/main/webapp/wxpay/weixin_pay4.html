@@ -6,13 +6,13 @@
 <title>押金电子收费</title>
 <style>
 	blockquote,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0}
-	body{font-family:"Microsoft YaHei",Helvetica,"Hiragino Sans GB",Arial,sans-serif;font-size:16px;color:#737373;
-	background-color:#F5F5F5;padding:4% 3% 3% 5%;  margin:0px 0px 0px 0px }
+	body{font-family:"Microsoft YaHei",Helvetica,"Hiragino Sans GB",Arial,sans-serif;font-size:13px;line-height:18px;color:#737373;
+	background-color:#F5F5F5;padding:25px 5px 0px 5px; margin:0px 10% 10% 33px}
 	table{margin:10px 0 15px 0;border-collapse:collapse}
 	td,th{border:1px solid #ddd;padding:3px 10px}
 	th{padding:5px 10px}a{color:#0069d6}
 	a:hover{color:#0050a3;text-decoration:none}
-	a img{border:none}p{margin-bottom:11px;font-family:"Microsoft YaHei"}
+	a img{border:none}p{margin-bottom:13px;font-family:"Microsoft YaHei"}
 	h1,h2,h3,h4,h5,h6{color:#404040;line-height:36px}h1{margin-bottom:18px;font-size:30px}
 	h2{font-size:24px}h3{font-size:18px}h4{font-size:16px}h5{font-size:14px}h6{font-size:13px}
 	hr{margin:0 0 19px;border:0;border-bottom:1px solid #ccc}
@@ -26,103 +26,78 @@
 	sup{font-size:.83em;vertical-align:super;line-height:0}*{-webkit-print-color-adjust:exact}
 	@media screen and (min-width:914px){body{width:854px;margin:10px auto}}
 	@media print{body,code,h1,h2,h3,h4,h5,h6,pre code{color:#000}pre,table{page-break-inside:avoid}}
-	#paymentDiv p {font-weight:bold; line-height: 75%;;padding-top:5%;}
-	/* input {width:85%;height:30px;margin-top:2%;padding-left: 43px; */ }
-	
-	
-		/*  -moz-linear-gradient( top,#44A57C,#158183); 
+	p {font-weight:bold; }
+	input {width:85%;height:30px;margin-top:2%;padding-left: 43px; }
+	button {
+		display: inline-block;
+		position: relative;
+		margin-top:10px;
+		padding: 0 20px;
+		width:  100%;
+		height: 40px;
+		text-align: center;
+		text-decoration: none;
+		color: #ffffff;
+		 background-color:#4CAD89;
+		font: bold 12px/25px Arial, sans-serif;
+		/* 
+		 -moz-linear-gradient( top,#44A57C,#158183); 
 		text-shadow: 1px 1px 1px rgba(255,255,255, .22);
 		-webkit-border-radius: 30px;
 		border-radius: 30px;
 		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
 		box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44); */
-		 	/* 	-webkit-transition: all 0.15s ease;
+/* 		-webkit-transition: all 0.15s ease;
 		-o-transition: all 0.15s ease;
 		-ms-transition: all 0.15s ease;
-		transition: all 0.15s ease;  */
-		
-	
-	#demo_line_05{
+		transition: all 0.15s ease; */
+	}
+	 .demo_line_05{
 		   letter-spacing: -1px;
 		   color: #009762;
+		  
 		   font-weight: lighter  ;
+	}
+	#payDiv{
+		height:65%;
 	}
 	
 	#qrcodeDiv {
-	
+		border-radius: 8px;
+		padding-top:35px;
+		padding-bottom:25px;
 		text-align:center;
+		background-color: #4CAD89;
 	}
-	
-	
 	#infoDiv{
-		 padding:0 5px 15px 12%; 
+		padding:25px 5px 25px 10%; 
+		border-radius: 8px;
+		font-weight: 400;
 	}
-	 #infoDiv span{
+	#infoDiv span{
+		line-height:23px;
 		color:black;
-	    font-weight: 500  ;
-	    font-size:17px;
-	} 
-	
-	  #infoDiv img{
-	  width:8%;
-	  height: 8%;
-	  vertical-align: bottom;
-	  
-	}  
-	 #infoDiv div{
-	 padding-bottom: 2%;
-	  
-	}  
-	.inputDiv{
-		border:solid 1px #dbdcde;
-	 	height:39px;
-		text-align:center;
-		background-color: white;
-		border-radius:3px;
+		 font-weight: 500   ;
+	}   
+	/* #username{
+	bor
+		BACKGROUND-REPEAT: no-repeat;
+	background-image:url(http://127.0.0.1:8080/wxpay/js/20160707154512.jpg);
+	} */
 	
 	
-	}
-	.iconDiv{
-		padding-left:0px;
-		width: 7%;
-		height: 58%;
-		margin: 8px 0 2px 0;
-	}
 	
-	button {
-		border-radius:3px;
-		display: inline-block;
-		position: relative;
-		margin-top:6%;
-		/* padding: 0 20px; */
-		border:none;
-		width:  100%;
-		height: 43.5px;
-		text-align: center;
-		text-decoration: none;
-		color: #ffffff;
-		 background-color:#009762;
-		font: bold 12px/25px Arial, sans-serif;
-		font-size:20px;
-		}
-		
-	
-	.textDiv{
-	border:none;
-	height:31px; width: 80%;float:right;font-size: 16px;
-	}
 </style>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/md5.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/jquery.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/jquery.qrcode.js"></script>
 <script src="http://127.0.0.1:8080/wxpay/js/qrcode.js"></script>
-
 <script Language="javascript">
-	/* $(function(){
+	$(function(){
 		$("#payDiv").hide();	
 	})
-	 */
+	
 	
 	function strToObj(str){
 		str = str.replace(/&/g, "','" );
@@ -165,17 +140,10 @@
 				}
 				break;
     		 case "payfee":
-    			var payfee = obj.value.trim();
- 				if( payfee== '') {
+ 				if(obj.value.trim() == '') {
  					$("#payfeeDiv").html("非空");
  					return false;
  				}
-
- 				 var reg=/^([1-9]\d*|0)(\.\d{1,2})?$/; 
- 				if(!reg.test(payfee)) {
- 					$("#payfeeDiv").html("格式错误");
- 					return false;
- 				} 
  				break;
     		 case "idcard":
     			 var idcard = obj.value.trim();
@@ -226,19 +194,13 @@
 		//alert(ob.organId+"--"+ob.companyName+"--"+ob.glOrgan+"--"+ob.deptId+"--"+ob.deptName); //2012-02-01
 		
 		
-	 	$.post(uriec,{"name":$("#username").val(),"totalNum":$("#payfee").val(),"remark":'押金收费',
+	 	$.post(uriec,{"name":$("#username").val(),"totalNum":$("#payfee").val(),"remark":"押金收费",
 	 		"idcard":$("#idcard").val(),"mobile":$("#mobile").val(),"organId":ob.organId,
 	 		"companyName":ob.companyName,"glOrgan":ob.glOrgan,"deptId":ob.deptId,
 	 		"deptName":"显示营服简称"
 	 		}, function(data){
 	 		//$('#qrcode-icon').html('');
 	 		$('#qrcode-icon').qrcode(data.urlCode); //任意字符串 
- 	 		/* $("#qrcode-icon").qrcode({ 
- 	 			render		: "canvas",
- 				width		: 145,
- 				height		: 135,
-			    text: data.urlCode 
-			}); */
 	 		var can = document.getElementsByTagName("canvas");
 	 		var src = can[0].toDataURL("image/png");
 	 		//$(can).replaceWith("<img src='"+src+"' />");
@@ -247,19 +209,14 @@
 	 		/* $("#text_id").attr("value",'');//清空内容
 				$("#text_id").attr("value",'test');// 填充内容 */
 	 		$("#paymentDiv").hide();
-	 		var idcard = $("#idcard").val();
-		    idcard = idcard.substring(0,4)+" **** " + idcard.substring(15);
 	 		$("#codeUsername").html($("#username").val());
 	 		$("#codePayfee").html($("#payfee").val());
-	 		$("#codeIdcard").html(idcard);
-	 		$("#codeRemark").html("押金收费");
-	 		$("#codeMobile").html($("#mobile").val());
-	 		
+	 		$("#codeIdcard").html($("#idcard").val());
 	 		$("#payDiv").show();
 
 	 		/* $("#codeUsername").val($("#username").val());
 			 */
-	 		$('#qrcode-icon').replaceWith("<div id='qrcode-icon' style='text-align:center;padding-bottom:10px; padding-top:13%;' ><img style='border: 2px solid #FFF; hight:60%; width:60%;' src='"+src+"' /></div>");
+	 		$('#qrcode-icon').replaceWith("<div id='qrcode-icon' style='text-align:center;padding-bottom:20px;' ><img src='"+src+"' /></div>");
 	 	});
 	}
 
@@ -269,102 +226,55 @@
 <body>
 	
 		<!-- <img src="F:/wxpay2/weixin_pay/src/main/webapp/js/weixin_pay.png"/> -->
-		<div  style="text-align: center; "><img src="http://127.0.0.1:8080/wxpay/js/weixin_pay.png"  width="70%" height="8%"/></div>
-		
+		<div  style="text-align: center;"><img src="http://127.0.0.1:8080/wxpay/js/weixin_pay.png"  width="80%" height="20%"/></div>
+		<br/>
+		<div class="demo_line_05">
+		<p style="text-align:center">
+		<span style="float: left;">——————</span> 
+		<span>用 户 支 付 </span>
+		<span style="float: right;">——————</span></p>
+		</div>
 
-
-
-<div id="paymentDiv" >	
-		
-		<div style=" width:100%;text-align:center; padding-top: 4% ;">  
-		
-            <hr style=" width:32%; display:inline-block ;border-color: #9fd4c1" /> 
-            <img src="http://127.0.0.1:8080/wxpay/js/z2.png" style="padding-bottom:10px;width: 22%;height: 16px"/>
-            <hr style=" width:32%; display:inline-block;border-color: #9fd4c1" />
-		</div> 
+<div id="paymentDiv">	
 	<form method="post" id="mf">	
-				<p >姓 &nbsp 名 <font color="red"> *</font>
-		<label  id="usernameDiv" style="color: red;"></label></p>
-		<div class="inputDiv" > 
-		 	<img class="iconDiv"  src="http://127.0.0.1:8080/wxpay/js/profile_1.png" > 
-		 
-		 	<input  class="textDiv"  type="text" name="username" id="username" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款用户的真实姓名">
-		</div>
-	
+		<p>姓名 <font color="red"> *</font>
+		<label  id="usernameDiv" style="color: red;"></label><br>
+		<input type="text" name="username" id="username" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款用户的真实姓名">
+		</p><p></p>
 		
-		<p>金 &nbsp 额 （元）<font color="red"> *</font>
-		<label id="payfeeDiv" style="color: red;"></label></p>
-		<div class="inputDiv" > 
-		<img class="iconDiv"  src="http://127.0.0.1:8080/wxpay/js/unknown-1.png" > 
-		<input type="text"  class="textDiv"   id="payfee" name="payfee" onfocus="FocusItem(this);" onblur="CheckItem(this);" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="请输入押金金额">
-		</div>
-
-		
+		<p>金额 （元）<font color="red"> *</font>
+		<label id="payfeeDiv" style="color: red;"></label><br>
+		<input type="text" id="payfee" name="payfee" onfocus="FocusItem(this);" onblur="CheckItem(this);" onkeyup="value=value.replace(/[^\d.]/g,'')" placeholder="请输入押金金额">
+		</p><p></p>
 		
 		<p>身份证 
-		<label id="idcardDiv" style="color: red;"></label></p>
-		<div class="inputDiv" > 
-		<img class="iconDiv" style="width:8%;height: 45%;margin-top: 10px" src="http://127.0.0.1:8080/wxpay/js/id.png" > 
-		<input type="text" id="idcard"  class="textDiv"   name="idcard" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款人身份证号">
-		</div>
-	
+		<label id="idcardDiv" style="color: red;"></label><br>
+		<input type="text" id="idcard" name="idcard" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入付款人身份证号">
+		</p><p></p>
 		
 		<p>手机号 
-		<label id="mobileDiv" style="color: red;"></label></p>
-		<div class="inputDiv" > 
-		<img class="iconDiv" style="width: 5%"  src="http://127.0.0.1:8080/wxpay/js/shouji.png" > 
-		<input type="text" id="mobile"  class="textDiv"   name="mobile" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入手机号码">
-		</div>
+		<label id="mobileDiv" style="color: red;"></label><br>
+		<input type="text" id="mobile"  name="mobile" onfocus="FocusItem(this);" onblur="CheckItem(this);" placeholder="请输入手机号码">
+		</p><p></p>
 		
-		<br>
-		<p style="color:#737373;font-weight: 500;">备注：押金电子收费</p>
-		<button type="button" onclick="callpay(mf);" >确认付款</button>
+		<p style="color: #929CA5;"> 备注：押金电子收费 </p>
+		<button type="button"   onclick="callpay(mf);" >确认付款</button>
  </form>
 </div> 
-<div id="payDiv"  style="display: none;">
-
-	<div  style="z-index: -1;position: absolute;padding-right:5%;padding-left:3%;font-size: 0">
-		<img src="http://127.0.0.1:8080/wxpay/js/11.png" height="50%" width="100%" />
-		
-		<img src="http://127.0.0.1:8080/wxpay/js/22.png" height="30%" width="100%" />
-	</div>
-		
+			
+<div id="payDiv">
 	<div id="qrcodeDiv"  > 
 		<div id="qrcode-icon"> 
 		</div>
-		<p style="color: #ffffff;font-family:'宋体';font-size: 17px;">长按上面二维码<br>进行微信支付</p>
+		<p style="color: #ffffff">长按上面二维码<br>进行微信付款</p>
 	</div>
-		<div id="infoDiv" style="margin-top: 14.5%;">
-			<div>
-				<img src="http://127.0.0.1:8080/wxpay/js/t3.png"> <span>姓
-					&nbsp 名： &nbsp <span id="codeUsername">aa</span>
-				</span><br>
-			</div>
-			<div>
-
-				<img src="http://127.0.0.1:8080/wxpay/js/monery.png"> <span>金
-					&nbsp 额： &nbsp <span id="codePayfee" style="color: #FC941C">500</span>
-				</span><br>
-			</div>
-			<div>
-				<img src="http://127.0.0.1:8080/wxpay/js/card.png"> <span>身份证：
-					&nbsp <span id="codeIdcard">65478931597654928</span>
-				</span><br>
-			</div>
-			
-			<div>
-				<img src="http://127.0.0.1:8080/wxpay/js/remark.png"> <span>备
-					&nbsp 注： &nbsp <span id="codeRemark"></span>
-				</span><br>
-			</div>
-			<div>
-				<img src="http://127.0.0.1:8080/wxpay/js/mobile.png"> <span>手
-					&nbsp 机： &nbsp <span id="codeMobile"></span>
-				</span><br>
-			</div>
-		</div>
+	<div id="infoDiv" style="background-color: #FFFFFF;"> 
+		<span>姓 &nbsp 名：<span id="codeUsername">aa</span></span><br>
+		<span>金 &nbsp 额：<span id="codePayfee" style="color: #FC941C">500</span></span><br>
+		<span>身份证：<span id="codeIdcard">65478931597654928</span></span><br>
+		<span>备 &nbsp 注：<span id="codeMobile">押金收费</span></span><br>
+	</div>
 </div>
-
 
 
 		
